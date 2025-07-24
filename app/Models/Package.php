@@ -8,17 +8,9 @@ class Package extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'package_type',
-        'title',
-        'package_image',
-        'original_price',
-        'discounted_price',
-        'features',
-        'status',
-    ];
+   protected $fillable = ['name', 'price', 'max_data_mb', 'max_properties', 'duration_months', 'is_active'];
 
     protected $casts = [
-        'features' => 'array', // Cast JSON column to array
+        
     ];
 }

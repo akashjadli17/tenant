@@ -36,7 +36,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('packages.index') }}" class="waves-effect">
+                    <a href="{{ route('admin.packages.index') }}" class="waves-effect">
                         <i class="bx bx-package"></i>
                         <span key="t-packages">Packages</span>
                     </a>

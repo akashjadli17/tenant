@@ -15,9 +15,9 @@ use App\Http\Controllers\AjaxCategoryController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\CareerDoctorController;
 use App\Http\Controllers\CareerApplicationController;
-use App\Http\Controllers\PackageController;
 use App\Http\Controllers\CartController;   
 use App\Http\Controllers\AdminController; 
+use App\Http\Controllers\Admin\PackageController; 
 
  
 
@@ -29,9 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //
     Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
-
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/choose-package/{package}', [DashboardController::class, 'choosePackage'])->name('choose.package');
 
 });
 
@@ -64,18 +63,19 @@ Route::post('/add-to-cart', [App\Http\Controllers\CartController::class, 'add'])
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
 Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('packages', PackageController::class);
+});
+
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
-
- // Route::view('/index' , 'admin/index')->name('dashboard');
  
+
     Route::resource('genders', GenderController::class);
     Route::resource('top-categories', TopCategoryController::class);
     Route::resource('mid-categories', MidCategoryController::class);
     Route::resource('services', ServiceController::class);
-   
-
   
     Route::post('/mid-categories/{midCategory}/upload-image', [MidCategoryController::class, 'uploadImage']);
 
@@ -106,9 +106,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('careers', CareerDoctorController::class);
 });
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::resource('packages', PackageController::class);
-});
+
+
 
 
 // Must match fetch() URL
@@ -142,11 +141,8 @@ Route::get('/change-password', function () {
 })->middleware('auth')->name('password.change');
 
   // Toggle Status Route
-Route::get('/packages', [PackageController::class, 'showPackages'])->name('packages');
-Route::post('/admin/packages/{id}/upload-image', [PackageController::class, 'uploadImage']);
-Route::post('/admin/packages/toggle-status/{id}', [PackageController::class, 'toggleStatus'])->name('packages.toggle-status');
 
-
+  
 
 
 
