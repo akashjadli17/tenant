@@ -220,15 +220,20 @@
                       </button>
                       <div class="dropdown-menu dropdown-menu-end">
                           <!-- item-->
-                          <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i>
+                          <a class="dropdown-item" href="{{route('profile.edit')}}"><i class="bx bx-user font-size-16 align-middle me-1"></i>
                               <span key="t-profile">Profile</span></a>
-                          {{-- <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i>
-                              <span key="t-my-wallet">My
-                                  Wallet</span></a> --}}
+                          
                           <div class="dropdown-divider"></div>
-                          <a class="dropdown-item text-danger" href="#"><i
-                                  class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span
-                                  key="t-logout">Logout</span></a>
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+
+                        <a class="dropdown-item text-danger" href="#" 
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+                            <span key="t-logout">Logout</span>
+                        </a>
+
                       </div>
                   </div>
 

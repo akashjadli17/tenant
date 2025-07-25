@@ -23,7 +23,7 @@
             </div>
             <!-- end page title -->
 
-            <h2>Choose a Package</h2>
+            <h2>Choose a Package</h2>   
             <div class="row">
                 @foreach($packages as $package)
                 <div class="col-md-4">
@@ -46,8 +46,6 @@
                 @endforeach
             </div>
 
-
-            <!-- end row -->
         </div>
     </div>
 
