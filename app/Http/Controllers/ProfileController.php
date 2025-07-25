@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProfileController extends Controller
 {
@@ -26,31 +28,35 @@ class ProfileController extends Controller
      */
 
 
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
+        $user = Auth::user();
 
- 
-        $user = $request->user();
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'gender' => 'nullable|string|max:10',
+            'profile_image' => 'nullable|image|max:2048', // max 2MB
+        ]);
 
-        $data = $request->validated();
-
-        // Handle profile image upload
         if ($request->hasFile('profile_image')) {
-            $path = $request->file('profile_image')->store('profile-images', 'public');
-            $data['profile_image'] = $path;
+            // Delete old image if exists
+            if ($user->profile_image && Storage::exists('public/profiles/' . $user->profile_image)) {
+                Storage::delete('public/profiles/' . $user->profile_image);
+            }
+
+            $filename = time() . '.' . $request->profile_image->extension();
+            $request->profile_image->storeAs('public/profiles', $filename);
+            $user->profile_image = $filename;
         }
-        
 
-        if ($user->email !== $data['email']) {
-            $data['email_verified_at'] = null;
-        }
+        $user->name = $validated['name'];
+        $user->phone = $validated['phone'] ?? null;
+        $user->gender = $validated['gender'] ?? null;
+        $user->save();
 
-        $user->fill($data)->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-               
+        return redirect()->route('profile.edit')->with('success', 'Profile updated.');
     }
-
 
     /**
      * Delete the user's account.

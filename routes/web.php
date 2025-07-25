@@ -17,10 +17,8 @@ use App\Http\Controllers\CareerDoctorController;
 use App\Http\Controllers\CareerApplicationController;
 use App\Http\Controllers\CartController;   
 use App\Http\Controllers\AdminController; 
+use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\Admin\PackageController; 
-
- 
-
 
 
 Route::middleware('auth')->group(function () {
@@ -70,8 +68,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
- 
-
     Route::resource('genders', GenderController::class);
     Route::resource('top-categories', TopCategoryController::class);
     Route::resource('mid-categories', MidCategoryController::class);
@@ -79,7 +75,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
   
     Route::post('/mid-categories/{midCategory}/upload-image', [MidCategoryController::class, 'uploadImage']);
 
- 
 });
 
 
