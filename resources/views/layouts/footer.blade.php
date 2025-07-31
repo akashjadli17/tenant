@@ -1,20 +1,21 @@
 <!-- footer area -->
 <footer class="footer-area">
-    <div class="footer-shape" style="background-image: url('{{asset('assets/img/shape/01.png')}}');"></div>
+    <div class="footer-shape" style="background-image: url(assets/img/shape/01.png);"></div>
     <div class="footer-widget">
         <div class="container">
             <div class="footer-widget-wrap pt-40 pb-40">
                 <div class="row g-4">
-                    <div class="col-lg-3">
+
+                    <!-- About -->
+                    <div class="col-lg-4">
                         <div class="footer-widget-box about-us">
                             <a href="#" class="footer-logo">
-                                <img src="{{asset('assets/img/logo/logo.png')}}" alt="">
+                                <img src="assets/img/logo/logo.png" alt="Tenant Portal Logo">
                             </a>
                             <p class="mb-4">
-                                We created TENANT with one goal in mind:
-                                to make the rental experience easier, fairer, and
-                                more transparent for everyone. Whether you're searching for
-                                a new place to call home.
+                                Tenant Portal is a centralized platform designed for landlords to securely manage tenant
+                                documentation, property records, and rental data — all in one place. Simplify your
+                                rental operations today.
                             </p>
                             <ul class="footer-social">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
@@ -22,116 +23,90 @@
                                 <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
                                 <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                             </ul>
-
                         </div>
                     </div>
+
+                    <!-- Quick Links -->
                     <div class="col-6 col-lg-2">
                         <div class="footer-widget-box list">
-                            <h4 class="footer-widget-title">Company</h4>
+                            <h4 class="footer-widget-title">Quick Links</h4>
                             <ul class="footer-list">
-                                <li><a href="#about" class="nav-link"><i class="far fa-angle-double-right"></i>About Us</a></li>
-                                <li><a href="#services" class="nav-link"><i class="far fa-angle-double-right"></i>Services</a>
-                                </li>
-                                <li><a href="#pricing" class="nav-link"><i
-                                            class="far fa-angle-double-right"></i>Pricing</a>
-                                </li>
-                                <li><a href="#contact" class="nav-link"><i class="far fa-angle-double-right"></i>Contact</a>
-                                </li>
-                                <li><a href="#home" class="nav-link"><i class="far fa-angle-double-right"></i>Home</a></li>
-                                
+                                <li><a href="index.php" class="nav-link"><i
+                                            class="far fa-angle-double-right"></i>Home</a></li>
+                                <li><a href="package.php" class="nav-link"><i
+                                            class="far fa-angle-double-right"></i>Packages</a></li>
+                                <li><a href="blog.php" class="nav-link"><i
+                                            class="far fa-angle-double-right"></i>Blog</a></li>
+                                <li><a href="contact.php" class="nav-link"><i
+                                            class="far fa-angle-double-right"></i>Contact</a></li>
+                                <li><a href="#" class="nav-link"><i
+                                            class="far fa-angle-double-right"></i>Login</a></li>
                             </ul>
                         </div>
                     </div>
-                   
-                    <div class="col-lg-4">
-                        <div class="footer-widget-box">
-                            <h4 class="footer-widget-title">Get In Touch</h4>
-                            <ul class="footer-contact">
-                                <li>
-                                    <div class="icon">
-                                        <i class="far fa-location-dot"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h6>Our Address</h6>
-                                        <p>25/AB Milford Road, New York, USA</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="icon">
-                                        <i class="far fa-phone"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h6>Call Us</h6>
-                                        <a href="tel:+21236547898">+2 123 654 7898</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="icon">
-                                        <i class="far fa-envelope"></i>
-                                    </div>
-                                    <div class="content">
-                                        <h6>Mail Us</h6>
-                                        <a
-                                            href="https://live.themewild.com/cdn-cgi/l/email-protection#0e676068614e6b766f637e626b206d6163"><span
-                                                class="__cf_email__"
-                                                data-cfemail="650c0b030a25001d04081509004b060a08">[email&#160;protected]</span></a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+
+
+                    <!-- Contact -->
                     <div class="col-lg-3">
                         <div class="footer-widget-box">
-                            <h4 class="footer-widget-title">Location</h4>
+                            <h4 class="footer-widget-title">Contact Us</h4>
                             <ul class="footer-contact">
                                 <li>
-                                    <div class="icon">
-                                        <i class="far fa-location-dot"></i>
-                                    </div>
+                                    <div class="icon"><i class="far fa-location-dot"></i></div>
                                     <div class="content">
-                                        <h6>Our Address</h6>
-                                        <p>25/AB Milford Road, New York, USA</p>
+                                        <h6>Head Office</h6>
+                                        <p>1234 Rental Avenue, Suite<br>Dream City, Country 000000</p>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="icon">
-                                        <i class="far fa-phone"></i>
-                                    </div>
+                                    <div class="icon"><i class="far fa-phone"></i></div>
                                     <div class="content">
                                         <h6>Call Us</h6>
-                                        <a href="tel:+21236547898">+2 123 654 7898</a>
+                                        <a href="tel:+911234567890">+91 12345 67890</a>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="icon">
-                                        <i class="far fa-envelope"></i>
-                                    </div>
+                                    <div class="icon"><i class="far fa-envelope"></i></div>
                                     <div class="content">
-                                        <h6>Mail Us</h6>
-                                        <a
-                                            href="https://live.themewild.com/cdn-cgi/l/email-protection#0e676068614e6b766f637e626b206d6163"><span
-                                                class="__cf_email__"
-                                                data-cfemail="650c0b030a25001d04081509004b060a08">[email&#160;protected]</span></a>
+                                        <h6>Email</h6>
+                                        <a href="mailto:info@tenantportal.com">info@tenantportal.com</a>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
+
+                    <!-- Map -->
+                    <div class="col-lg-3">
+                        <div class="footer-widget-box">
+                            <h4 class="footer-widget-title">Our Location</h4>
+                            <div class="mt-3">
+                                <iframe
+                                    src="https://maps.google.com/maps?q=Dream%20City&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                    width="100%" height="200" style="border:0; border-radius: 8px;"
+                                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Copyright -->
     <div class="container text-center">
         <div class="copyright">
             <div class="row">
                 <div class="col-md-6 align-self-center">
                     <p class="copyright-text">
-                        &copy; Copyright <span id="date"></span> <a href="#"> Tenant </a> All Rights Reserved.
+                        &copy; <span id="date"></span> <a href="#">Tenant Portal</a> — All Rights Reserved.
                     </p>
                 </div>
                 <div class="col-md-6">
                     <p class="copyright-text">
-                        <span id="date"></span>Design & Develop By <a href="#"> Wedigital India  </a> 
+                        Designed & Developed by <a href="#">WeDigital India</a>
                     </p>
                 </div>
             </div>
@@ -147,20 +122,20 @@
 
 
 <!-- js -->
-<script data-cfasync="false" src="{{asset('assets/js/mail-decode.min.js')}}"></script>
-<script src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
-<script src="{{asset('assets/js/modernizr.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('assets/js/imagesloaded.pkgd.min.js')}}"></script>
-<script src="{{asset('assets/js/jquery.magnific-popup.min.js')}}"></script>
-<script src="{{asset('assets/js/isotope.pkgd.min.js')}}"></script>
-<script src="{{asset('assets/js/jquery.appear.min.js')}}"></script>
-<script src="{{asset('assets/js/jquery.easing.min.js')}}"></script>
-<script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
-<script src="{{asset('assets/js/counter-up.js')}}"></script>
-<script src="{{asset('assets/js/jquery.nice-select.min.js')}}"></script>
-<script src="{{asset('assets/js/wow.min.js')}}"></script>
-<script src="{{asset('assets/js/main.js')}}"></script>
+<script data-cfasync="false" src="{{ asset('assets/js/mail-decode.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.appear.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('assets/js/counter-up.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ asset('assets/js/wow.min.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 <!-- slider -->
 <script>
     var myCarousel = document.querySelector('#carouselExampleControls');

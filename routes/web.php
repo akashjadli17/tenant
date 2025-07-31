@@ -34,17 +34,13 @@ Route::middleware('auth')->group(function () {
 
  Route::get('/', [IndexController::class, 'index'])->name('index');
 
-Route::view('/about-us' , 'about')->name('about');
-
-
-Route::get('/men', [MenController::class, 'showMenCategories'])->name('men');
-Route::get('/women', [WomenController::class, 'showWomenCategories'])->name('women');
-
-Route::view('/packages' , 'packages')->name('packages');
-Route::view('/contact' , 'contact')->name('contact');
-
-Route::view('/wallet' , 'wallet')->name('wallet');
-Route::view('/card' , 'card')->name('card');
+// Route::view('/', 'home')->name('home'); // Home Page
+Route::view('/packages', 'packages')->name('packages');
+Route::view('/blog', 'blog')->name('blog');
+Route::view('/contact', 'contact')->name('contact');
+Route::view('/about-us', 'about')->name('about');
+Route::view('/wallet', 'wallet')->name('wallet');
+Route::view('/card', 'card')->name('card');
 Route::view('/login' , 'login')->name('login');
 Route::view('/edit-profile' , 'edit-profile')->name('edit-profile');
 Route::view('/forget' , 'forget')->name('forget');
