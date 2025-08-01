@@ -32,6 +32,11 @@ Route::middleware('auth')->group(function () {
 
 });
 
+
+Route::view('/properties', 'admin.properties.create');
+Route::view('/units', 'admin.units.create');
+
+
  Route::get('/', [IndexController::class, 'index'])->name('index');
 
 // Route::view('/', 'home')->name('home'); // Home Page
