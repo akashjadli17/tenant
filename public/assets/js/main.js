@@ -364,14 +364,14 @@ Version         : 1.0
 
 /*----------- 16. navslide ----------*/
 
-        $('.nav-link').click(function (e) {
-            e.preventDefault();
-            var target = $($(this).attr('href'));
-            if (target.length) {
-                var scrollTo = target.offset().top;
-                $('body, html').animate({ scrollTop: scrollTo + 'px' }, 2000);
-            }
-        });
+        // $('.nav-link').click(function (e) {
+        //     e.preventDefault();
+        //     var target = $($(this).attr('href'));
+        //     if (target.length) {
+        //         var scrollTo = target.offset().top;
+        //         $('body, html').animate({ scrollTop: scrollTo + 'px' }, 2000);
+        //     }
+        // });
  
 
 

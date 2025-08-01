@@ -144,7 +144,3 @@
         ride: 'carousel'
     });
 </script>
-</body>
-
-
-</html>
