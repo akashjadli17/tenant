@@ -18,6 +18,7 @@ use App\Http\Controllers\CareerApplicationController;
 use App\Http\Controllers\CartController;   
 use App\Http\Controllers\AdminController; 
 use App\Http\Controllers\DashboardController; 
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\Admin\PackageController; 
 
 
@@ -32,9 +33,13 @@ Route::middleware('auth')->group(function () {
 
 });
 
+ 
+Route::get('/units', [PropertyController::class, 'units'])->name('units.index');
+Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+Route::get('/properties/create', [PropertyController::class, 'create'])->name('properties.create');
+Route::post('/properties/store', [PropertyController::class, 'store'])->name('properties.store');
 
-Route::view('/properties', 'admin.properties.create');
-Route::view('/units', 'admin.units.create');
+
 
 
  Route::get('/', [IndexController::class, 'index'])->name('index');
