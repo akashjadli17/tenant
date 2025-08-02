@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.min.css') }}">
 
+ 
+
     <!-- JS Plugin (if needed early) -->
     <script src="{{ asset('assets/dashboard/js/plugin.js') }}"></script>
 

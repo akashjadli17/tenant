@@ -27,6 +27,18 @@
                     </ul>
                 </li>
 
+                 <li>
+                    <a href="{{ route('properties.index') }}" class="waves-effect">
+                        <i class="bx bx-store"></i>
+                        <span key="t-services">Properties</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('units.index') }}" class="waves-effect">
+                        <i class="bx bx-store"></i>
+                        <span key="t-services">Units</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="{{ route('services.index') }}" class="waves-effect">
