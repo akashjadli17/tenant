@@ -19,6 +19,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController; 
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\Admin\PackageController; 
 
 
@@ -34,11 +35,14 @@ Route::middleware('auth')->group(function () {
 });
 
  
-Route::get('/units', [PropertyController::class, 'units'])->name('units.index');
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/properties/create', [PropertyController::class, 'create'])->name('properties.create');
 Route::post('/properties/store', [PropertyController::class, 'store'])->name('properties.store');
 
+// Unit Routes (via PropertyController for now)
+Route::get('/units', [PropertyController::class, 'units'])->name('units.index');
+Route::get('/units/index', [PropertyController::class, 'createUnit'])->name('units.index');
+Route::post('/units/store', [UnitController::class, 'store'])->name('units.store');
 
 
 

@@ -6,18 +6,16 @@ use App\Models\Unit;
 use App\Models\PropertyImage;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
- 
+use Illuminate\Support\Str;
+
 class PropertyController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
-        return view('admin.properties.create');
-    }
+        $properties = Property::with('units')->orderBy('created_at', 'desc')->get();
 
-    public function units(Request $request)
-    {
-        return view('admin.units.create');
+        return view('admin.properties.index', compact('properties'));
     }
 
     public function create()
@@ -91,4 +89,21 @@ class PropertyController extends Controller
     }
     
     
+public function createUnit(Request $request)
+{
+    $propertyId = $request->get('property_id');
+    $properties = Property::all();
+    $selectedProperty = Property::find($propertyId); // ✅ get the specific one
+
+    $units = Unit::where('property_id', $propertyId)->get();
+
+    return view('admin.units.index', compact('properties', 'propertyId', 'selectedProperty', 'units'));
+}
+
+
+    // Optional: units page
+    public function units()
+    {
+        return view('admin.units.index');
+    }
 }
