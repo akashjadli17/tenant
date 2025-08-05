@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', $doctor->dr_name . ' | Myraluxa Aesthetic Pvt Ltd')
+@section('title', $doctor->dr_name . ' | Tenants Management')
 
 @section('content')
 <main class="main">

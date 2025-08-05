@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Myraluxa Aesthetic Pvt Ltd')
+@section('title', 'Tenants Management')
 
 @section('content')
    <main class="main">
@@ -48,13 +48,13 @@
                                     </ul>
                                 </div>
                                 <h4 class="blog-title">
-                                    <a href="blog-details.php">There are many variations of passages orem available.</a>
+                                    <a href="{{ route('blogs')}}">There are many variations of passages orem available.</a>
                                 </h4>
                                 <p>
                                     It is a long established fact that a reader will majority have suffered distracted
                                     readable.
                                 </p>
-                                <a class="theme-btn" href="blog-details.php">Read More<i
+                                <a class="theme-btn" href="{{ route('blogs')}}">Read More<i
                                         class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -76,13 +76,13 @@
                                     </ul>
                                 </div>
                                 <h4 class="blog-title">
-                                    <a href="blog-details.php">Generator internet repeat tend word chunk necessary.</a>
+                                    <a href="{{ route('blogs')}}">Generator internet repeat tend word chunk necessary.</a>
                                 </h4>
                                 <p>
                                     It is a long established fact that a reader will majority have suffered distracted
                                     readable.
                                 </p>
-                                <a class="theme-btn" href="blog-details.php">Read More<i
+                                <a class="theme-btn" href="{{ route('blogs')}}">Read More<i
                                         class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -104,13 +104,13 @@
                                     </ul>
                                 </div>
                                 <h4 class="blog-title">
-                                    <a href="blog-details.php">Survived only five centuries but also the leap into.</a>
+                                    <a href="{{ route('blogs')}}">Survived only five centuries but also the leap into.</a>
                                 </h4>
                                 <p>
                                     It is a long established fact that a reader will majority have suffered distracted
                                     readable.
                                 </p>
-                                <a class="theme-btn" href="blog-details.php">Read More<i
+                                <a class="theme-btn" href="{{ route('blogs')}}">Read More<i
                                         class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -132,13 +132,13 @@
                                     </ul>
                                 </div>
                                 <h4 class="blog-title">
-                                    <a href="blog-details.php">There are many variations of passages orem available.</a>
+                                    <a href="{{ route('blogs')}}">There are many variations of passages orem available.</a>
                                 </h4>
                                 <p>
                                     It is a long established fact that a reader will majority have suffered distracted
                                     readable.
                                 </p>
-                                <a class="theme-btn" href="blog-details.php">Read More<i
+                                <a class="theme-btn" href="{{ route('blogs')}}">Read More<i
                                         class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -160,13 +160,13 @@
                                     </ul>
                                 </div>
                                 <h4 class="blog-title">
-                                    <a href="blog-details.php">Generator internet repeat tend word chunk necessary.</a>
+                                    <a href="{{ route('blogs')}}">Generator internet repeat tend word chunk necessary.</a>
                                 </h4>
                                 <p>
                                     It is a long established fact that a reader will majority have suffered distracted
                                     readable.
                                 </p>
-                                <a class="theme-btn" href="blog-details.php">Read More<i
+                                <a class="theme-btn" href="{{ route('blogs')}}">Read More<i
                                         class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -188,13 +188,13 @@
                                     </ul>
                                 </div>
                                 <h4 class="blog-title">
-                                    <a href="blog-details.php">Survived only five centuries but also the leap into.</a>
+                                    <a href="{{ route('blogs')}}">Survived only five centuries but also the leap into.</a>
                                 </h4>
                                 <p>
                                     It is a long established fact that a reader will majority have suffered distracted
                                     readable.
                                 </p>
-                                <a class="theme-btn" href="blog-details.php">Read More<i
+                                <a class="theme-btn" href="{{ route('blogs')}}">Read More<i
                                         class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>

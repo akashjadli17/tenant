@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\TenantController;
 use App\Http\Controllers\Admin\PackageController; 
 
 
@@ -44,12 +45,12 @@ Route::get('/units', [PropertyController::class, 'units'])->name('units.index');
 Route::get('/units/index', [PropertyController::class, 'createUnit'])->name('units.index');
 Route::post('/units/store', [UnitController::class, 'store'])->name('units.store');
 
+Route::resource('tenants', TenantController::class);
 
 
  Route::get('/', [IndexController::class, 'index'])->name('index');
 
 // Route::view('/', 'home')->name('home'); // Home Page
-Route::view('/packages', 'packages')->name('packages');
 Route::view('/blog', 'blog')->name('blog');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/about-us', 'about')->name('about');
@@ -70,6 +71,7 @@ Route::view('/treatments-type-women' , 'treatments-type-women')->name('treatment
 Route::post('/add-to-cart', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
 Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/packages',[PackageController::class, 'frontPackages'])->name('frontPackages');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('packages', PackageController::class);

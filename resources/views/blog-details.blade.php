@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', $blog->title . ' | Myraluxa Aesthetic Pvt Ltd')
+@section('title', $blog->title . ' | Tenants Management')
 
 @section('content')
 

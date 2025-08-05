@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Myraluxa Aesthetic Pvt Ltd')
+@section('title', 'Tenants Management')
 
 @section('content')
     <main class="main">
@@ -34,9 +34,12 @@
                                     </div>
 
                                     <ul class="services">
-                                        @foreach ($package->features as $feature)
-                                            <li>{{ $feature }}</li>
-                                        @endforeach
+                                      @if (is_array($package->features))
+                                            @foreach ($package->features as $feature)
+                                                <li>{{ $feature }}</li>
+                                            @endforeach
+                                        @endif
+
                                     </ul>
 
                                     <div class="package-bottom">
