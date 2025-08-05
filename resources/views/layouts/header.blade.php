@@ -36,7 +36,7 @@
                      <div class="offcanvas-body gap-xl-4">
                          <ul class="navbar-nav justify-content-end flex-grow-1">
                              <li class="nav-item"><a class="nav-link" href="{{ route('index') }}">Home</a></li>
-                             <li class="nav-item"><a class="nav-link" href="{{ route('packages') }}">Packages</a></li>
+                             <li class="nav-item"><a class="nav-link" href="{{ route('frontPackages') }}">Packages</a></li>
                              <li class="nav-item"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li>
                              <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
                          </ul>

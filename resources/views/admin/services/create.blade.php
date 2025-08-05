@@ -1,6 +1,6 @@
 @extends('layouts.adminmaster')
 
-@section('title', 'Add Service | Myraluxa Aesthetic Pvt Ltd')
+@section('title', 'Add Service | Tenants Management')
 
 @section('content')
     <div class="main-content">

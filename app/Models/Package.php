@@ -8,9 +8,18 @@ class Package extends Model
 {
     use HasFactory;
 
-   protected $fillable = ['name', 'price', 'max_data_mb', 'max_properties', 'duration_months', 'is_active'];
+    protected $fillable = [
+        'name',
+        'price',
+        'max_data_mb',
+        'max_properties',
+        'duration_months',
+        'is_active',
+        'features', // ✅ Add this too if it's not already included
+    ];
 
     protected $casts = [
-        
+        'features' => 'array', // ✅ Cast 'features' as array
     ];
 }
+

@@ -12,6 +12,13 @@ class PackageController extends Controller
         return view('admin.packages.index', compact('packages'));
     }
 
+    
+    public function frontPackages()
+    {
+        $packages = Package::all();
+        return view('packages', compact('packages'));
+    }
+
     public function create()
     {
         return view('admin.packages.create');
