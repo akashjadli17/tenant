@@ -215,7 +215,7 @@
                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <img class="rounded-circle header-profile-user" src="{{ asset('assets/dashboard/images//users/avatar-1.jpg') }}"
                               alt="Header Avatar">
-                          <span class="d-none d-xl-inline-block ms-1" key="t-henry">Myra-Skincare</span>
+                          <span class="d-none d-xl-inline-block ms-1" key="t-henry">Tenant</span>
                           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                       </button>
                       <div class="dropdown-menu dropdown-menu-end">
