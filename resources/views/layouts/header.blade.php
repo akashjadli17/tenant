@@ -7,12 +7,12 @@
          <nav class="navbar navbar-expand-lg">
              <div class="container position-relative">
                  <a class="navbar-brand" href="/">
-                     <img src="assets/img/logo/logo.png" alt="logo">
+                     <img src="assets/img/logo/logo.png" alt="Tenant_logo">
                  </a>
                  <div class="mobile-menu-right">
                      <div class="mobile-menu-btn">
                          <div class="nav-btn">
-                             <a href="#" class="theme-btn"><i class="fa-solid fa-arrow-right-to-bracket"></i>
+                             <a href="{{ route('login') }}" class="theme-btn"><i class="fa-solid fa-arrow-right-to-bracket"></i>
                                  Login</a>
                          </div>
                      </div>
@@ -28,7 +28,7 @@
                      aria-labelledby="offcanvasNavbarLabel">
                      <div class="offcanvas-header">
                          <a href="/" class="offcanvas-brand" id="offcanvasNavbarLabel">
-                             <img src="assets/img/logo/logo.png" alt="">
+                             <img src="assets/img/logo/logo.png" alt="Tenant_logo">
                          </a>
                          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i
                                  class="far fa-xmark"></i></button>

@@ -75,7 +75,7 @@
 
                     <!-- Image Column (Mobile First) -->
                     <div class="col-lg-6 order-1 order-lg-2 text-center">
-                        <img src="https://rentok-marketplace.s3.ap-south-1.amazonaws.com/marketplace-dump/marketing-assets/bae54b74-883b-4cf2-89e1-7b823eb4da5b.webp"
+                        <img src="assets\img\logo\tenent_banner.png"
                             alt="App character" class="img-fluid mt-4 mt-lg-0" style="max-width: 100%; height: auto;" />
                     </div>
                 </div>
