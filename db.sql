@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2025 at 07:49 AM
+-- Generation Time: Aug 14, 2025 at 08:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,16 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('myraluxxe@gmail.com|127.0.0.1', 'i:1;', 1755148119),
+('myraluxxe@gmail.com|127.0.0.1:timer', 'i:1755148119;', 1755148119),
+('test@gmail.com|106.219.160.186', 'i:2;', 1754548393),
+('test@gmail.com|106.219.160.186:timer', 'i:1754548393;', 1754548393);
 
 -- --------------------------------------------------------
 
@@ -129,7 +139,12 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2025_07_24_051644_create_packages_table', 1),
-(2, '2025_07_24_051807_add_package_to_users', 2);
+(2, '2025_07_24_051807_add_package_to_users', 2),
+(3, '2025_08_02_061710_create_properties_table', 3),
+(4, '2025_08_02_061733_create_property_images_table', 4),
+(5, '2025_08_02_061912_create_units_table', 5),
+(6, '2025_08_05_050951_create_tenants_table', 6),
+(7, '2025_08_05_062203_create_tenant_documents_table', 7);
 
 -- --------------------------------------------------------
 
@@ -138,23 +153,25 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `packages` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `max_data_mb` int(11) NOT NULL,
-  `max_properties` int(11) NOT NULL,
-  `duration_months` int(11) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` int(11) NOT NULL,
+  `package_type` varchar(50) NOT NULL,
+  `price` decimal(12,2) NOT NULL,
+  `billing_cycle` enum('Monthly','Quarterly','Yearly','Unlimited') NOT NULL,
+  `currency` char(3) DEFAULT 'USD',
+  `features` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`features`)),
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `packages`
 --
 
-INSERT INTO `packages` (`id`, `name`, `price`, `max_data_mb`, `max_properties`, `duration_months`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'basic', 2000.00, 200, 2, 1, 1, '2025-07-24 02:24:59', '2025-07-24 02:24:59');
+INSERT INTO `packages` (`id`, `package_type`, `price`, `billing_cycle`, `currency`, `features`, `status`, `created_at`, `updated_at`) VALUES
+(8, 'basic', 399.00, 'Monthly', 'INR', '\"[\\\"Manage up to 10 Tenants\\\",\\\"Basic Document Storage\\\",\\\"Secure Cloud Hosting\\\",\\\"Limited Email Support\\\"]\"', 'active', '2025-08-13 06:46:21', '2025-08-13 06:46:21'),
+(9, 'standard', 799.00, 'Monthly', 'INR', '\"[\\\"Manage up to 50 Tenants\\\",\\\"Advanced Document Storage\\\",\\\"Multi-Property Management\\\",\\\"SMS & Email Notifications\\\",\\\"Email + Chat Support\\\"]\"', 'active', '2025-08-13 06:46:36', '2025-08-13 06:46:36'),
+(10, 'premium', 1499.00, 'Monthly', 'INR', '\"[\\\"Unlimited Tenants\\\",\\\"Unlimited Property Management\\\",\\\"Custom Notifications & Reminders\\\",\\\"Custom Branding & Logo\\\",\\\"Priority 24\\\\\\/7 Support\\\",\\\"Automated PDF Reports\\\"]\"', 'active', '2025-08-13 06:46:55', '2025-08-13 06:46:55');
 
 -- --------------------------------------------------------
 
@@ -167,6 +184,67 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `properties`
+--
+
+CREATE TABLE `properties` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
+  `country` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `zip_code` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `properties`
+--
+
+INSERT INTO `properties` (`id`, `type`, `name`, `description`, `thumbnail`, `country`, `state`, `city`, `zip_code`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'lease', 'jaineet Taneja', 'as', 'thumbnails/6nkadQA1pG2uW79Ah4Hcl2ROtJjE7PmVi0IlOzyn.jpg', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:10:50', '2025-08-02 01:10:50'),
+(2, 'lease', 'sec', 'zx', 'thumbnails/6SRjgxkEs2O6OEXqBK81e6EUErL3Xgp6yVltML33.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:24:44', '2025-08-02 01:24:44'),
+(3, 'lease', 'sec', 'zx', 'thumbnails/vtbGR4MXxwf2N5sEqdWS1VkWQccT2xH7vWQeegTd.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:24:51', '2025-08-02 01:24:51'),
+(4, 'lease', 'sec', 'zx', 'thumbnails/NgJgD4ZpVhl8SdcbtoA68SmIGCjSVcMu8ypLR7jh.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:01', '2025-08-02 01:25:01'),
+(5, 'lease', 'sec', 'zx', 'thumbnails/bE01D4Xw3VDKrvGDDcpYqvhikjvJcc360KioZvT3.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:09', '2025-08-02 01:25:09'),
+(6, 'own', 'asd', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:30', '2025-08-02 01:25:30'),
+(7, 'own', 'jaineet Tanejs', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:46', '2025-08-02 01:25:46'),
+(8, 'lease', 'jaineet Tad', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:26:00', '2025-08-02 01:26:00'),
+(9, 'own', 'abc jai x', 'sd', NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Ncartment', '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
+(10, 'own', 'noifsq', 'this is noida proprty', 'thumbnails/xPaumuoucRrJsabP8WSbjJyUozKV0agTdKqgVksc.jpg', 'india', 'Uttar Pradesh', 'noida', '201301', 'sector 2Noida', '2025-08-04 00:02:48', '2025-08-04 00:02:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `property_images`
+--
+
+CREATE TABLE `property_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `property_id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `property_images`
+--
+
+INSERT INTO `property_images` (`id`, `property_id`, `image`, `created_at`, `updated_at`) VALUES
+(1, 9, 'property_images/Vnrdqdr49LKSkmVuP3W7hup7sa9CHmOV9d62ItiS.png', '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
+(2, 9, 'property_images/a8wFj6Wpg2j4MGvnioKvS9CbFI1sfYK3v7bFDJAp.webp', '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
+(3, 9, 'property_images/A98xqx3tSfVlN7fbFUPq95uYKLzWvVl3VtKggujs.webp', '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
+(4, 9, 'property_images/xfcoQZNNqPFIzjMrE067pZODQ0Qqiu8UzWPS9N4x.webp', '2025-08-02 01:37:30', '2025-08-02 01:37:30');
 
 -- --------------------------------------------------------
 
@@ -185,7 +263,7 @@ CREATE TABLE `services` (
   `duration` varchar(50) DEFAULT NULL,
   `highlight_points` text DEFAULT NULL,
   `overview` text DEFAULT NULL,
-  `how_it_works` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`how_it_works`)),
+  `how_it_works` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `faqs` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `action` enum('active','inactive') DEFAULT 'active',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -210,19 +288,66 @@ CREATE TABLE `sessions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `top_categories`
+-- Table structure for table `tenants`
 --
 
-
-
-CREATE TABLE `genders` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(50) NOT NULL,
-  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+CREATE TABLE `tenants` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `total_family_member` int(11) DEFAULT NULL,
+  `profile` varchar(255) DEFAULT NULL,
+  `country` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `zip_code` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `property_id` bigint(20) UNSIGNED NOT NULL,
+  `unit_id` bigint(20) UNSIGNED NOT NULL,
+  `lease_start_date` date NOT NULL,
+  `lease_end_date` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `tenants`
+--
+
+INSERT INTO `tenants` (`id`, `first_name`, `last_name`, `email`, `password`, `phone_number`, `total_family_member`, `profile`, `country`, `state`, `city`, `zip_code`, `address`, `property_id`, `unit_id`, `lease_start_date`, `lease_end_date`, `created_at`, `updated_at`) VALUES
+(1, 'akash', 'dev', 'akash@gmail.com', '$2y$12$Z/6BIEYwaCrkgsHJt7k1Z.qe3BJOwqfVVXzcAjkWSwYS5mY4qkwNO', '894834898', 5, 'tenant_profiles/ZjnB88mP97lpQZVWsffnD9kBVUoiCYU3rII5VmIk.webp', 'india', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', 10, 3, '2025-08-05', '2025-08-05', '2025-08-04 23:54:04', '2025-08-05 01:23:57'),
+(2, 'dhanoj', 'pandey', 'dhanojpandey08@gmail.com', '$2y$12$ofYP3aoB8fAn998lEV8Hhu3/b0svzFQRisjWzaD6F8Msr2CqkzDWO', '9309329032', 5, 'tenant_profiles/c0fLz9hrgD4ZdK4JQytTuIugL7rKc5fS95mTRw0b.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', 8, 2, '2025-08-08', '2025-08-31', '2025-08-05 00:54:39', '2025-08-05 00:54:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tenant_documents`
+--
+
+CREATE TABLE `tenant_documents` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tenant_id` bigint(20) UNSIGNED NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tenant_documents`
+--
+
+INSERT INTO `tenant_documents` (`id`, `tenant_id`, `filename`, `path`, `created_at`, `updated_at`) VALUES
+(1, 2, 'WhatsApp Image 2025-07-28 at 12.14.03.jpeg', 'tenant_documents/DQV4GjxmYihYrG1uW0eM40J0x9MTbThIVlVjxYqZ.jpg', '2025-08-05 00:54:39', '2025-08-05 00:54:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `top_categories`
+--
 
 CREATE TABLE `top_categories` (
   `id` int(11) NOT NULL,
@@ -231,6 +356,42 @@ CREATE TABLE `top_categories` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `units`
+--
+
+CREATE TABLE `units` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `property_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `bedroom` int(11) NOT NULL DEFAULT 0,
+  `kitchen` int(11) NOT NULL DEFAULT 0,
+  `bath` int(11) NOT NULL DEFAULT 0,
+  `rent` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `rent_type` varchar(255) NOT NULL,
+  `rent_duration` int(11) DEFAULT NULL,
+  `deposit_type` varchar(255) NOT NULL DEFAULT 'fixed',
+  `deposit_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `late_fee_type` varchar(255) NOT NULL DEFAULT 'fixed',
+  `late_fee_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `incident_receipt_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `notes` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `property_id`, `name`, `bedroom`, `kitchen`, `bath`, `rent`, `rent_type`, `rent_duration`, `deposit_type`, `deposit_amount`, `late_fee_type`, `late_fee_amount`, `incident_receipt_amount`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 9, 'acs', 1, 1, 1, 1.00, 'weekly', 1111, 'fixed', 21.00, 'fixed', 21.00, 12.00, 'e', '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
+(2, 9, 'Myrsdf', 34, 34, 34, 1.00, 'monthly', NULL, 'fixed', 43.00, 'fixed', 34.00, 43.00, '4', '2025-08-04 02:12:06', '2025-08-04 02:12:06'),
+(3, 10, 'Myra Luxe Aesthetics', 5, 5, 5, 5.00, 'monthly', 1, 'percentage', 30000.00, 'fixed', 500.00, 30000.00, 'j', '2025-08-04 02:18:33', '2025-08-04 02:18:33'),
+(4, 8, 'erter', 54, 54, 54, 54.00, 'monthly', 30, 'fixed', 54.00, 'fixed', 54.00, 54.00, '54', '2025-08-04 23:25:59', '2025-08-04 23:25:59');
 
 -- --------------------------------------------------------
 
@@ -260,8 +421,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `user_type`, `phone`, `gender`, `profile_image`, `package_id`, `package_expires_at`) VALUES
-(1, 'test', 'test@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', NULL, '2025-07-01 00:47:37', '2025-07-25 00:18:33', 'admin', '9999111186', 'female', '1753422513.png', 1, '2025-08-25 00:07:48'),
-(2, 'Akash', 'akash@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', NULL, '2025-07-10 01:34:05', '2025-07-25 00:54:07', 'customer', '9318432272', 'male', '1753424647.png', 1, '2025-08-25 00:07:59');
+(1, 'admin', 'admin@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', 'P3a0pB2ljjSVeZDtkE170BdJ7Gm3GxvjShNaBuyirNHlTL1BlzjAc0wWReKF', '2025-07-01 00:47:37', '2025-08-13 01:02:40', 'admin', '9999111186', 'male', '1755062769.jpg', 1, '2025-09-13 01:02:40'),
+(2, 'Akash', 'akash@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', NULL, '2025-07-10 01:34:05', '2025-08-03 23:37:56', 'customer', '9318432272', 'male', '1753424647.png', 1, '2025-09-03 23:37:56');
 
 --
 -- Indexes for dumped tables
@@ -325,6 +486,19 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `properties`
+--
+ALTER TABLE `properties`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `property_images`
+--
+ALTER TABLE `property_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `property_images_property_id_foreign` (`property_id`);
+
+--
 -- Indexes for table `services`
 --
 ALTER TABLE `services`
@@ -340,11 +514,34 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
+-- Indexes for table `tenants`
+--
+ALTER TABLE `tenants`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tenants_email_unique` (`email`),
+  ADD KEY `tenants_property_id_foreign` (`property_id`),
+  ADD KEY `tenants_unit_id_foreign` (`unit_id`);
+
+--
+-- Indexes for table `tenant_documents`
+--
+ALTER TABLE `tenant_documents`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tenant_documents_tenant_id_foreign` (`tenant_id`);
+
+--
 -- Indexes for table `top_categories`
 --
 ALTER TABLE `top_categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `gender_id` (`gender_id`,`name`);
+
+--
+-- Indexes for table `units`
+--
+ALTER TABLE `units`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `units_property_id_foreign` (`property_id`);
 
 --
 -- Indexes for table `users`
@@ -380,13 +577,25 @@ ALTER TABLE `mid_categories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `properties`
+--
+ALTER TABLE `properties`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `property_images`
+--
+ALTER TABLE `property_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -395,10 +604,28 @@ ALTER TABLE `services`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tenants`
+--
+ALTER TABLE `tenants`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tenant_documents`
+--
+ALTER TABLE `tenant_documents`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `top_categories`
 --
 ALTER TABLE `top_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `units`
+--
+ALTER TABLE `units`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -417,22 +644,35 @@ ALTER TABLE `mid_categories`
   ADD CONSTRAINT `mid_categories_ibfk_1` FOREIGN KEY (`top_category_id`) REFERENCES `top_categories` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `property_images`
+--
+ALTER TABLE `property_images`
+  ADD CONSTRAINT `property_images_property_id_foreign` FOREIGN KEY (`property_id`) REFERENCES `properties` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `services`
 --
 ALTER TABLE `services`
   ADD CONSTRAINT `services_ibfk_1` FOREIGN KEY (`mid_category_id`) REFERENCES `mid_categories` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `top_categories`
+-- Constraints for table `tenants`
 --
-ALTER TABLE `top_categories`
-  ADD CONSTRAINT `top_categories_ibfk_1` FOREIGN KEY (`gender_id`) REFERENCES `genders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `tenants`
+  ADD CONSTRAINT `tenants_property_id_foreign` FOREIGN KEY (`property_id`) REFERENCES `properties` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tenants_unit_id_foreign` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `users`
+-- Constraints for table `tenant_documents`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE SET NULL;
+ALTER TABLE `tenant_documents`
+  ADD CONSTRAINT `tenant_documents_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `tenants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `units`
+--
+ALTER TABLE `units`
+  ADD CONSTRAINT `units_property_id_foreign` FOREIGN KEY (`property_id`) REFERENCES `properties` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
