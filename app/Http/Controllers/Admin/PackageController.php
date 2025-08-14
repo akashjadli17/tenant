@@ -1,8 +1,10 @@
 <?php
-namespace App\Http\Controllers\Admin; 
+
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
 use App\Models\Package;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller; 
 
 class PackageController extends Controller
 {
@@ -12,13 +14,6 @@ class PackageController extends Controller
         return view('admin.packages.index', compact('packages'));
     }
 
-    
-    public function frontPackages()
-    {
-        $packages = Package::all();
-        return view('packages', compact('packages'));
-    }
-
     public function create()
     {
         return view('admin.packages.create');
@@ -26,17 +21,20 @@ class PackageController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'price' => 'required|numeric',
-            'max_data_mb' => 'required|integer',
-            'max_properties' => 'required|integer',
-            'duration_months' => 'required|integer',
+        $validated = $request->validate([
+            'package_type'   => 'required|string|max:50',
+            'price'          => 'required|numeric',
+            'billing_cycle'  => 'required|in:Monthly,Quarterly,Yearly,Unlimited',
+            'currency'       => 'nullable|string|size:3',
+            'features'       => 'nullable|array',
+            'status'         => 'required|in:active,inactive',
         ]);
 
-        Package::create($request->all());
+        $validated['features'] = json_encode($validated['features'] ?? []);
 
-        return redirect()->route('admin.packages.index')->with('success', 'Package created');
+        Package::create($validated);
+
+        return redirect()->route('admin.packages.index')->with('success', 'Package created successfully.');
     }
 
     public function show(Package $package)
@@ -51,23 +49,25 @@ class PackageController extends Controller
 
     public function update(Request $request, Package $package)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'price' => 'required|numeric',
-            'max_data_mb' => 'required|integer',
-            'max_properties' => 'required|integer',
-            'duration_months' => 'required|integer',
+        $validated = $request->validate([
+            'package_type'   => 'required|string|max:50',
+            'price'          => 'required|numeric',
+            'billing_cycle'  => 'required|in:Monthly,Quarterly,Yearly,Unlimited',
+            'currency'       => 'nullable|string|size:3',
+            'features'       => 'nullable|array',
+            'status'         => 'required|in:active,inactive',
         ]);
 
-        $package->update($request->all());
+        $validated['features'] = json_encode($validated['features'] ?? []);
 
-        return redirect()->route('admin.packages.index')->with('success', 'Package updated');
+        $package->update($validated);
+
+        return redirect()->route('admin.packages.index')->with('success', 'Package updated successfully.');
     }
 
     public function destroy(Package $package)
     {
         $package->delete();
-
-        return redirect()->route('admin.packages.index')->with('success', 'Package deleted');
+        return redirect()->route('admin.packages.index')->with('success', 'Package deleted successfully.');
     }
 }

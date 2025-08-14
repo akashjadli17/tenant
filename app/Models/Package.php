@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,17 +10,15 @@ class Package extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'package_type',
         'price',
-        'max_data_mb',
-        'max_properties',
-        'duration_months',
-        'is_active',
-        'features', // ✅ Add this too if it's not already included
+        'billing_cycle',
+        'currency',
+        'features',
+        'status'
     ];
 
     protected $casts = [
-        'features' => 'array', // ✅ Cast 'features' as array
+        'features' => 'array', // Auto decode JSON
     ];
 }
-
