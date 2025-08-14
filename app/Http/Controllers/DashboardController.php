@@ -9,15 +9,17 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index()
-    {
-        $packages = Package::where('is_active', 1)->get();
+{
+    // Fetch only active packages
+    $packages = Package::where('status', 'active')->get();
 
-        if (Auth::user()->role === 'admin') {
-            return redirect()->intended(route('admin.dashboard'));
-        }
-            
-        return view('dashboard', compact('packages'));
+    if (Auth::user()->role === 'admin') {
+        return redirect()->intended(route('admin.dashboard'));
     }
+        
+    return view('dashboard', compact('packages'));
+}
+
 
     public function choosePackage(Package $package)
     {

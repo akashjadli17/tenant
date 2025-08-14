@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Myra Skincare')</title>
+    <title>@yield('title', 'Tenant Portal')</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo/favicon.png') }}">
 
     <!-- CSS Files -->

@@ -4,8 +4,8 @@
           <div class="navbar-header">
               <div class="d-flex">
                   <!-- LOGO -->
-                  <div class="navbar-brand-box">   
-                      <a href="{{route('index')}}" class="logo logo-dark">
+                  <div class="navbar-brand-box">
+                      <a href="{{ route('index') }}" class="logo logo-dark">
                           <span class="logo-sm">
                               <img src="{{ asset('assets/img/logo/fav.png') }}" alt="" height="40">
                           </span>
@@ -14,7 +14,7 @@
                           </span>
                       </a>
 
-                      <a href="{{route('index')}}" class="logo logo-light">
+                      <a href="{{ route('index') }}" class="logo logo-light">
                           <span class="logo-sm">
                               <img src="{{ asset('assets/img/logo/fav.png') }}" alt="" height="40">
                           </span>
@@ -67,36 +67,41 @@
                   <div class="dropdown d-inline-block">
                       <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false">
-                          <img id="header-lang-img" src="{{ asset('assets/dashboard/images/flags/india.png') }}" alt="Header Language" height="35">
+                          <img id="header-lang-img" src="{{ asset('assets/dashboard/images/flags/india.png') }}"
+                              alt="Header Language" height="35">
                       </button>
                       <div class="dropdown-menu dropdown-menu-end">
 
                           <!-- item-->
                           <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="en">
-                              <img src="{{ asset('assets/dashboard/images/flags/us.jpg') }}" alt="user-image" class="me-1" height="12"> <span
-                                  class="align-middle">English</span>
+                              <img src="{{ asset('assets/dashboard/images/flags/us.jpg') }}" alt="user-image"
+                                  class="me-1" height="12"> <span class="align-middle">English</span>
                           </a>
                           <!-- item-->
                           <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
-                              <img src="{{ asset('assets/dashboard/images//flags/spain.jpg') }}" alt="user-image" class="me-1" height="12">
+                              <img src="{{ asset('assets/dashboard/images//flags/spain.jpg') }}" alt="user-image"
+                                  class="me-1" height="12">
                               <span class="align-middle">Spanish</span>
                           </a>
 
                           <!-- item-->
                           <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
-                              <img src="{{ asset('assets/dashboard/images//flags/germany.jpg') }}" alt="user-image" class="me-1" height="12">
+                              <img src="{{ asset('assets/dashboard/images//flags/germany.jpg') }}" alt="user-image"
+                                  class="me-1" height="12">
                               <span class="align-middle">German</span>
                           </a>
 
                           <!-- item-->
                           <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
-                              <img src="{{ asset('assets/dashboard/images//flags/italy.jpg') }}" alt="user-image" class="me-1" height="12">
+                              <img src="{{ asset('assets/dashboard/images//flags/italy.jpg') }}" alt="user-image"
+                                  class="me-1" height="12">
                               <span class="align-middle">Italian</span>
                           </a>
 
                           <!-- item-->
                           <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
-                              <img src="{{ asset('assets/dashboard/images//flags/russia.jpg') }}" alt="user-image" class="me-1" height="12">
+                              <img src="{{ asset('assets/dashboard/images//flags/russia.jpg') }}" alt="user-image"
+                                  class="me-1" height="12">
                               <span class="align-middle">Russian</span>
                           </a>
                       </div>
@@ -104,7 +109,8 @@
 
 
                   <div class="dropdown d-none d-lg-inline-block ms-1">
-                      <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
+                      <button type="button" class="btn header-item noti-icon waves-effect"
+                          data-bs-toggle="fullscreen">
                           <i class="bx bx-fullscreen"></i>
                       </button>
                   </div>
@@ -150,12 +156,13 @@
                               </a>
                               <a href="javascript: void(0);" class="text-reset notification-item">
                                   <div class="d-flex">
-                                      <img src="{{ asset('assets/dashboard/images//users/avatar-3.jpg') }}" class="me-3 rounded-circle avatar-xs"
-                                          alt="user-pic">
+                                      <img src="{{ asset('assets/dashboard/images//users/avatar-3.jpg') }}"
+                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                       <div class="flex-grow-1">
                                           <h6 class="mb-1">James Lemire</h6>
                                           <div class="font-size-12 text-muted">
-                                              <p class="mb-1" key="t-simplified">It will seem like simplified English.
+                                              <p class="mb-1" key="t-simplified">It will seem like simplified
+                                                  English.
                                               </p>
                                               <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span
                                                       key="t-hours-ago">1
@@ -186,8 +193,8 @@
 
                               <a href="javascript: void(0);" class="text-reset notification-item">
                                   <div class="d-flex">
-                                      <img src="{{ asset('assets/dashboard/images//users/avatar-4.jpg') }}" class="me-3 rounded-circle avatar-xs"
-                                          alt="user-pic">
+                                      <img src="{{ asset('assets/dashboard/images//users/avatar-4.jpg') }}"
+                                          class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                       <div class="flex-grow-1">
                                           <h6 class="mb-1">Salena Layfield</h6>
                                           <div class="font-size-12 text-muted">
@@ -211,28 +218,52 @@
                   </div>
 
                   <div class="dropdown d-inline-block">
-                      <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                      {{-- <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <img class="rounded-circle header-profile-user" src="{{ asset('assets/dashboard/images//users/avatar-1.jpg') }}"
                               alt="Header Avatar">
                           <span class="d-none d-xl-inline-block ms-1" key="t-henry">Tenant</span>
                           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                      </button> --}}
+
+
+                      <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                          {{-- Profile Image --}}
+                          @php
+                              $profileImage = Auth::user()->profile_image
+                                  ? asset('storage/profiles/' . Auth::user()->profile_image)
+                                  : asset('assets/dashboard/images/users/avatar-1.jpg');
+                          @endphp
+
+                          <img class="rounded-circle header-profile-user" src="{{ $profileImage }}"
+                              alt="Header Avatar" style="object-fit: cover; width: 32px; height: 32px;">
+
+                          {{-- User Name --}}
+                          <span class="d-none d-xl-inline-block ms-1" key="t-henry">
+                              {{ Auth::user()->name ?? 'Tenant' }}
+                          </span>
+
+                          <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                       </button>
                       <div class="dropdown-menu dropdown-menu-end">
                           <!-- item-->
-                          <a class="dropdown-item" href="{{route('profile.edit')}}"><i class="bx bx-user font-size-16 align-middle me-1"></i>
+                          <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                  class="bx bx-user font-size-16 align-middle me-1"></i>
                               <span key="t-profile">Profile</span></a>
-                          
-                          <div class="dropdown-divider"></div>
-                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
 
-                        <a class="dropdown-item text-danger" href="#" 
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
-                            <span key="t-logout">Logout</span>
-                        </a>
+                          <div class="dropdown-divider"></div>
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                              style="display: none;">
+                              @csrf
+                          </form>
+
+                          <a class="dropdown-item text-danger" href="#"
+                              onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                              <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+                              <span key="t-logout">Logout</span>
+                          </a>
 
                       </div>
                   </div>
