@@ -2,7 +2,7 @@
 <div class="modal fade" 
      id="{{ isset($package) ? 'editPackageModal'.$package->id : 'createPackageModal' }}" 
      tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -65,9 +65,13 @@
                     <!-- Features -->
                     <div class="mb-3">
                         <label class="form-label">Features</label>
-                        <div class="row feature-list" id="featureListContainer{{ isset($package) ? $package->id : '' }}">
-                            <!-- Features will be populated by JS -->
+                        <div id="featureListContainer{{ isset($package) ? $package->id : '' }}">
+                            <!-- Dynamic rows -->
                         </div>
+                        <button type="button" class="btn btn-sm btn-primary mt-2 add-feature-btn" 
+                                data-target="{{ isset($package) ? $package->id : '' }}">
+                            + Add Feature
+                        </button>
                     </div>
 
                     <!-- Status -->
@@ -93,63 +97,57 @@
     </div>
 </div>
 
-<!-- JS to handle dynamic features -->
+<!-- JS for dynamic features -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const featureSets = {
-        basic: [
-            {name: "Manage up to 10 Tenants", checked: true},
-            {name: "Basic Document Storage", checked: true},
-            {name: "Secure Cloud Hosting", checked: true},
-            {name: "Limited Email Support", checked: true},
-            {name: "Multi-Property Management", checked: false},
-            {name: "Custom Notifications", checked: false}
-        ],
-        standard: [
-            {name: "Manage up to 50 Tenants", checked: true},
-            {name: "Advanced Document Storage", checked: true},
-            {name: "Multi-Property Management", checked: true},
-            {name: "SMS & Email Notifications", checked: true},
-            {name: "Email + Chat Support", checked: true},
-            {name: "Custom Branding", checked: false}
-        ],
-        premium: [
-            {name: "Unlimited Tenants", checked: true},
-            {name: "Unlimited Property Management", checked: true},
-            {name: "Custom Notifications & Reminders", checked: true},
-            {name: "Custom Branding & Logo", checked: true},
-            {name: "Priority 24/7 Support", checked: true},
-            {name: "Automated PDF Reports", checked: true}
-        ]
-    };
-
-    function renderFeatures(packageType, containerId) {
+    function createFeatureRow(containerId, featureName = "", isChecked = false) {
         const container = document.getElementById("featureListContainer" + containerId);
-        container.innerHTML = "";
-        if (featureSets[packageType]) {
-            featureSets[packageType].forEach(feature => {
-                const col = document.createElement("div");
-                col.classList.add("col-12");
-                col.innerHTML = `
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="features[]" value="${feature.name}" ${feature.checked ? "checked" : ""}>
-                        <label class="form-check-label">${feature.name}</label>
-                    </div>
-                `;
-                container.appendChild(col);
-            });
-        }
-    }
+        const index = container.children.length;
 
-    document.querySelectorAll(".package-select").forEach(select => {
-        select.addEventListener("change", function () {
-            renderFeatures(this.value, this.dataset.target);
+        const row = document.createElement("div");
+        row.classList.add("row", "align-items-center", "mb-2");
+
+        row.innerHTML = `
+            <div class="col-8">
+                <input type="text" name="features[${index}][name]" 
+                       class="form-control" placeholder="Enter feature" 
+                       value="${featureName}">
+            </div>
+            <div class="col-2 text-center">
+                <input type="hidden" name="features[${index}][checked]" value="0">
+                <input type="checkbox" class="form-check-input" 
+                       name="features[${index}][checked]" value="1" 
+                       ${isChecked ? "checked" : ""}>
+            </div>
+            <div class="col-2 text-center">
+                <button type="button" class="btn btn-sm btn-danger remove-feature">&times;</button>
+            </div>
+        `;
+
+        row.querySelector(".remove-feature").addEventListener("click", function () {
+            row.remove();
         });
 
-        // Load initial features if editing
-        if (select.value) {
-            renderFeatures(select.value, select.dataset.target);
-        }
+        container.appendChild(row);
+    }
+
+    // Add feature button
+    document.querySelectorAll(".add-feature-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            createFeatureRow(this.dataset.target);
+        });
     });
+
+    // Load existing features if editing
+    @if(isset($package) && $package->features)
+        const existingFeatures = @json(json_decode($package->features, true));
+        if (Array.isArray(existingFeatures)) {
+            existingFeatures.forEach(f => {
+                const name = typeof f === "object" ? (f.name || "") : f;
+                const checked = typeof f === "object" ? (f.checked || false) : true;
+                createFeatureRow("{{ $package->id ?? '' }}", name, checked);
+            });
+        }
+    @endif
 });
 </script>

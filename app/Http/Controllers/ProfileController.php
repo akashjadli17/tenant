@@ -2,71 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
-class PackageController extends Controller
+class ProfileController extends Controller
 {
-    public function index()
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request): View
     {
-        $packages = Package::all();
-        return view('packages.index', compact('packages'));
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
-    public function create()
+    /**
+     * Update the user's profile information.
+     */
+    public function update(Request $request)
     {
-        return view('packages.create');
-    }
+        $user = Auth::user();
 
-    public function store(Request $request)
-    {
         $validated = $request->validate([
-            'package_type' => 'required|string|max:50',
-            'price' => 'required|numeric',
-            'billing_cycle' => 'required|in:Monthly,Quarterly,Yearly,Unlimited',
-            'currency' => 'nullable|string|size:3',
-            'features' => 'nullable|array',
-            'status' => 'required|in:active,inactive',
+            'name'          => 'required|string|max:255',
+            'phone'         => 'nullable|string|max:20',
+            'gender'        => 'nullable|string|max:10',
+            'profile_image' => 'nullable|image|max:2048', // max 2MB
         ]);
 
-        $validated['features'] = json_encode($validated['features'] ?? []);
+        if ($request->hasFile('profile_image')) {
+            // Delete old image if exists
+            if ($user->profile_image && Storage::exists('public/profiles/' . $user->profile_image)) {
+                Storage::delete('public/profiles/' . $user->profile_image);
+            }
 
-        Package::create($validated);
+            $filename = time() . '.' . $request->profile_image->extension();
+            $request->profile_image->storeAs('public/profiles', $filename);
+            $user->profile_image = $filename;
+        }
 
-        return redirect()->route('packages.index')->with('success', 'Package created successfully.');
+        $user->name   = $validated['name'];
+        $user->phone  = $validated['phone'] ?? null;
+        $user->gender = $validated['gender'] ?? null;
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
     }
 
-    public function show(Package $package)
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request)
     {
-        return view('packages.show', compact('package'));
-    }
-
-    public function edit(Package $package)
-    {
-        return view('packages.edit', compact('package'));
-    }
-
-    public function update(Request $request, Package $package)
-    {
-        $validated = $request->validate([
-            'package_type' => 'required|string|max:50',
-            'price' => 'required|numeric',
-            'billing_cycle' => 'required|in:Monthly,Quarterly,Yearly,Unlimited',
-            'currency' => 'nullable|string|size:3',
-            'features' => 'nullable|array',
-            'status' => 'required|in:active,inactive',
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
         ]);
 
-        $validated['features'] = json_encode($validated['features'] ?? []);
+        $user = $request->user();
 
-        $package->update($validated);
+        Auth::logout();
+        $user->delete();
 
-        return redirect()->route('packages.index')->with('success', 'Package updated successfully.');
-    }
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    public function destroy(Package $package)
-    {
-        $package->delete();
-        return redirect()->route('packages.index')->with('success', 'Package deleted successfully.');
+        return Redirect::to('/');
     }
 }
