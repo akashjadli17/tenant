@@ -1,23 +1,45 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Package;
-use Illuminate\Http\Request;
+use App\Models\Property;
+use App\Models\Unit;
+use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
-
 
 class DashboardController extends Controller
 {
-    public function index()
-{
-    // Fetch only active packages
-    $packages = Package::where('status', 'active')->get();
+  // app/Http/Controllers/AdminDashboardController.php
 
-    if (Auth::user()->role === 'admin') {
-        return redirect()->intended(route('admin.dashboard'));
+public function index()
+{
+    if (!Auth::user()->isAdmin()) {
+        abort(403);
     }
-        
-    return view('dashboard', compact('packages'));
+
+    $totalProperties = Property::count();
+    $totalUnits      = Unit::count();
+    $totalInvoice    = 0;
+    $totalExpense    = 0;
+
+    $user         = Auth::user();
+    $showPackages = $user->shouldSeePackageChooser(10);
+    $daysLeft     = $user->daysUntilPackageExpires();
+
+    $packages = $showPackages
+        ? Package::where('status', 'active')->get()
+        : collect();
+
+    return view('admin.dashboard', compact(
+        'totalProperties',
+        'totalUnits',
+        'totalInvoice',
+        'totalExpense',
+        'packages',
+        'showPackages',
+        'daysLeft'
+    ));
 }
 
 

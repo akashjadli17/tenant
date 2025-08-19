@@ -4,9 +4,18 @@
 
 @section('content')
 
+
+@if(!is_null($daysLeft) && $daysLeft <= 10 && $daysLeft> 0)
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <i class="mdi mdi-alert-circle-outline me-2"></i>
+        Your plan expires in <strong class="ms-1">{{ $daysLeft }}</strong> day{{ $daysLeft == 1 ? '' : 's' }}.
+        Consider renewing to avoid interruptions.
+    </div>
+    @endif
+
+
     <!-- Start right Content here -->
     <div class="main-content">
-
         <div class="page-content">
             <div class="container-fluid">
 
@@ -98,32 +107,68 @@
                 </div>
                 <!-- End Dashboard Stat Cards -->
 
-                <!-- Packages Section -->
-                <h2 class="mt-4">Choose a Package</h2>
+                {{-- Packages Section --}}
+                @if($showPackages)
+                <h2 class="mt-4">
+                    Choose a Package
+                    @if(!is_null($daysLeft))
+                    <small class="text-muted">
+                        ({{ $daysLeft <= 0 ? 'Expired' : $daysLeft.' days left' }})
+                    </small>
+                    @endif
+                </h2>
+
                 <div class="row">
-                    @foreach ($packages as $package)
-                        <div class="col-md-4">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5>{{ $package->name }}</h5>
-                                    <p>₹{{ $package->price }}</p>
-                                    <ul>
-                                        <li>Data: {{ $package->max_data_mb }}MB</li>
-                                        <li>Properties: {{ $package->max_properties }}</li>
-                                        <li>Duration: {{ $package->duration_months }} months</li>
-                                    </ul>
-                                    <form method="POST" action="{{ route('choose.package', $package->id) }}">
-                                        @csrf
-                                        <button class="btn btn-primary">Choose Package</button>
-                                    </form>
+                    @forelse ($packages as $package)
+                    <div class="col-md-4">
+                        <div class="card mb-3 h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="text-capitalize mb-1">{{ $package->package_type }}</h5>
+
+                                @php
+                                $currency = strtoupper($package->currency ?? 'INR');
+                                $symbol = $currency === 'INR' ? '₹' : ($currency === 'USD' ? '$' : $currency.' ');
+                                @endphp
+
+                                <div class="mb-2">
+                                    <span
+                                        class="fw-semibold">{{ $symbol }}{{ number_format($package->price, 2) }}</span>
+                                    <small class="text-muted">/ {{ $package->billing_cycle }}</small>
                                 </div>
+
+                                @if(is_array($package->features))
+                                <ul class="list-unstyled small mb-3">
+                                    @foreach($package->features as $feat)
+                                    <li class="mb-1">
+                                        @if(($feat['checked'] ?? '0') == '1')
+                                        ✅ {{ $feat['name'] ?? '' }}
+                                        @else
+                                        ❌ <span class="text-muted">{{ $feat['name'] ?? '' }}</span>
+                                        @endif
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @endif
+
+                                <form action="{{ route('choose.package', $package->id) }}" method="POST"
+                                    class="mt-auto">
+                                    @csrf
+                                    <button class="btn btn-primary w-100">Choose Package</button>
+                                </form>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                    @empty
+                    <div class="col-12">
+                        <div class="alert alert-info">No active packages available right now.</div>
+                    </div>
+                    @endforelse
                 </div>
+                @endif
+
 
             </div>
         </div>
     </div>
 
-@endsection
+    @endsection
