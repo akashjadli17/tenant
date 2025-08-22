@@ -6,15 +6,14 @@
 
 
 @if(!is_null($daysLeft) && $daysLeft <= 10 && $daysLeft> 0)
+
     <div class="alert alert-warning d-flex align-items-center" role="alert">
         <i class="mdi mdi-alert-circle-outline me-2"></i>
         Your plan expires in <strong class="ms-1">{{ $daysLeft }}</strong> day{{ $daysLeft == 1 ? '' : 's' }}.
         Consider renewing to avoid interruptions.
     </div>
-    @endif
+    @endif 
 
-
-    <!-- Start right Content here -->
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
@@ -33,11 +32,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- end page title -->
-
-                <!-- Dashboard Stat Cards -->
-                <div class="row">
-                    <!-- Total Property -->
+                 
+                <div class="row"> 
                     <div class="col-md-3">
                         <div class="card mini-stats-wid">
                             <div class="card-body d-flex align-items-center">
@@ -53,8 +49,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Total Unit -->
+ 
                     <div class="col-md-3">
                         <div class="card mini-stats-wid">
                             <div class="card-body d-flex align-items-center">
@@ -171,4 +166,4 @@
         </div>
     </div>
 
-    @endsection
+@endsection
