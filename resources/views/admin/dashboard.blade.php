@@ -5,13 +5,14 @@
 @section('content')
 
 
-@if(!is_null($daysLeft) && $daysLeft <= 10 && $daysLeft> 0)
+    @if(!is_null($daysLeft) && $daysLeft <= 10 && $daysLeft> 0)
 
-    <div class="alert alert-warning d-flex align-items-center" role="alert">
-        <i class="mdi mdi-alert-circle-outline me-2"></i>
-        Your plan expires in <strong class="ms-1">{{ $daysLeft }}</strong> day{{ $daysLeft == 1 ? '' : 's' }}.
-        Consider renewing to avoid interruptions.
-    </div>
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+            <i class="mdi mdi-alert-circle-outline me-2"></i>
+            Your plan expires in <strong class="ms-1">{{ $daysLeft }}</strong> day{{ $daysLeft == 1 ? '' : 's' }}.
+            Consider renewing to avoid interruptions.
+        </div>
+        
     @endif 
 
     <div class="main-content">
