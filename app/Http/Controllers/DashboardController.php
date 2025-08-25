@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 
 namespace App\Http\Controllers;
 
@@ -85,39 +84,4 @@ public function choosePackage(Package $package)
 }
 
 
-=======
-namespace App\Http\Controllers;
-
-use App\Models\Package;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-
-class DashboardController extends Controller
-{
-    public function index()
-{
-    // Fetch only active packages
-    $packages = Package::where('status', 'active')->get();
-
-    if (Auth::user()->role === 'admin') {
-        return redirect()->intended(route('admin.dashboard'));
-    }
-        
-    return view('dashboard', compact('packages'));
-}
-
-
-    public function choosePackage(Package $package)
-    {
-        $user = auth()->user();
-        $user->package_id = $package->id;
-        $user->package_expires_at = now()->addMonths($package->duration_months);
-        $user->save();
-
-        return redirect()->route('dashboard')->with('success', 'Package applied successfully.');
-    }
-
-
->>>>>>> 5020873c18cec238c14327fd31a614a8599b6212
 }
