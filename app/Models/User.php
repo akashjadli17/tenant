@@ -55,6 +55,7 @@ class User extends Authenticatable
         ];
     }
 
+<<<<<<< HEAD
 
     public function package()
     {
@@ -102,3 +103,11 @@ class User extends Authenticatable
     }
 
 }
+=======
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
+
+}
+>>>>>>> 5020873c18cec238c14327fd31a614a8599b6212
