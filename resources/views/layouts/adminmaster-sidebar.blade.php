@@ -16,8 +16,8 @@
                     </a>
                 </li>
 
-               
-                 <li>
+
+                <li>
                     <a href="{{ route('properties.index') }}" class="waves-effect">
                         <i class="bx bx-store"></i>
                         <span key="t-services">Properties</span>
@@ -43,7 +43,16 @@
                         <span key="t-packages">Packages</span>
                     </a>
                 </li>
- 
+                
+                <li>
+                    <a href="{{ route('notifications.index') }}" class="waves-effect">
+                        <i class="bx bx-bell"></i>
+                        <span key="t-notifications">Notifications</span>
+                    </a>
+                </li>
+
+
+
             </ul>
         </div>
         <!-- Sidebar -->

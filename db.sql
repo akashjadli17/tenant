@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2025 at 08:30 AM
+-- Generation Time: Aug 26, 2025 at 08:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -149,6 +149,23 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` char(36) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notifiable_type` varchar(255) NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `packages`
 --
 
@@ -156,6 +173,11 @@ CREATE TABLE `packages` (
   `id` int(11) NOT NULL,
   `package_type` varchar(50) NOT NULL,
   `price` decimal(12,2) NOT NULL,
+  `interval` varchar(255) NOT NULL DEFAULT 'month',
+  `interval_count` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `auto_renews` tinyint(1) NOT NULL DEFAULT 1,
+  `trial_days` int(10) UNSIGNED DEFAULT NULL,
+  `total_cycles` int(10) UNSIGNED DEFAULT NULL,
   `billing_cycle` enum('Monthly','Quarterly','Yearly','Unlimited') NOT NULL,
   `currency` char(3) DEFAULT 'USD',
   `features` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`features`)),
@@ -168,10 +190,10 @@ CREATE TABLE `packages` (
 -- Dumping data for table `packages`
 --
 
-INSERT INTO `packages` (`id`, `package_type`, `price`, `billing_cycle`, `currency`, `features`, `status`, `created_at`, `updated_at`) VALUES
-(8, 'basic', 399.00, 'Monthly', 'INR', '\"[\\\"Manage up to 10 Tenants\\\",\\\"Basic Document Storage\\\",\\\"Secure Cloud Hosting\\\",\\\"Limited Email Support\\\"]\"', 'active', '2025-08-13 06:46:21', '2025-08-13 06:46:21'),
-(9, 'standard', 799.00, 'Monthly', 'INR', '\"[\\\"Manage up to 50 Tenants\\\",\\\"Advanced Document Storage\\\",\\\"Multi-Property Management\\\",\\\"SMS & Email Notifications\\\",\\\"Email + Chat Support\\\"]\"', 'active', '2025-08-13 06:46:36', '2025-08-13 06:46:36'),
-(10, 'premium', 1499.00, 'Monthly', 'INR', '\"[\\\"Unlimited Tenants\\\",\\\"Unlimited Property Management\\\",\\\"Custom Notifications & Reminders\\\",\\\"Custom Branding & Logo\\\",\\\"Priority 24\\\\\\/7 Support\\\",\\\"Automated PDF Reports\\\"]\"', 'active', '2025-08-13 06:46:55', '2025-08-13 06:46:55');
+INSERT INTO `packages` (`id`, `package_type`, `price`, `interval`, `interval_count`, `auto_renews`, `trial_days`, `total_cycles`, `billing_cycle`, `currency`, `features`, `status`, `created_at`, `updated_at`) VALUES
+(14, 'basic', 399.00, 'month', 1, 1, NULL, NULL, 'Monthly', 'INR', '\"[{\\\"name\\\":\\\"Manage up to 10 Tenants\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Basic Document Storage\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Secure Cloud Hosting\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Limited Email Support\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Multi-Property Management\\\",\\\"checked\\\":\\\"0\\\"},{\\\"name\\\":\\\"Custom Notifications\\\",\\\"checked\\\":\\\"0\\\"}]\"', 'active', '2025-08-16 02:05:42', '2025-08-25 05:26:21'),
+(15, 'standard', 799.00, 'month', 1, 1, NULL, NULL, 'Monthly', 'INR', '\"[{\\\"name\\\":\\\"Manage up to 50 Tenants\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Advanced Document Storage\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Multi-Property Management\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"SMS & Email Notifications\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Email + Chat Support\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Custom Branding\\\",\\\"checked\\\":\\\"0\\\"}]\"', 'active', '2025-08-16 02:07:10', '2025-08-25 05:26:27'),
+(17, 'premium', 1499.00, 'month', 1, 1, NULL, NULL, 'Monthly', 'INR', '\"[{\\\"name\\\":\\\"Unlimited Tenants\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Unlimited Property Management\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Custom Notifications & Reminders\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Custom Branding & Logo\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Priority 24\\\\\\/7 Support\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Automated PDF Reports\\\",\\\"checked\\\":\\\"1\\\"}]\"', 'active', '2025-08-16 02:11:00', '2025-08-16 02:11:00');
 
 -- --------------------------------------------------------
 
@@ -413,6 +435,8 @@ CREATE TABLE `users` (
   `gender` varchar(255) DEFAULT NULL,
   `profile_image` varchar(255) DEFAULT NULL,
   `package_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `package_started_at` timestamp NULL DEFAULT NULL,
+  `package_renews_at` timestamp NULL DEFAULT NULL,
   `package_expires_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -420,9 +444,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `user_type`, `phone`, `gender`, `profile_image`, `package_id`, `package_expires_at`) VALUES
-(1, 'admin', 'admin@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', 'P3a0pB2ljjSVeZDtkE170BdJ7Gm3GxvjShNaBuyirNHlTL1BlzjAc0wWReKF', '2025-07-01 00:47:37', '2025-08-13 01:02:40', 'admin', '9999111186', 'male', '1755062769.jpg', 1, '2025-09-13 01:02:40'),
-(2, 'Akash', 'akash@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', NULL, '2025-07-10 01:34:05', '2025-08-03 23:37:56', 'customer', '9318432272', 'male', '1753424647.png', 1, '2025-09-03 23:37:56');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `user_type`, `phone`, `gender`, `profile_image`, `package_id`, `package_started_at`, `package_renews_at`, `package_expires_at`) VALUES
+(1, 'admin', 'admin@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', 'P3a0pB2ljjSVeZDtkE170BdJ7Gm3GxvjShNaBuyirNHlTL1BlzjAc0wWReKF', '2025-07-01 00:47:37', '2025-08-13 01:02:40', 'admin', '9999111186', 'male', '1755062769.jpg', 1, NULL, NULL, '2025-09-13 01:02:40'),
+(2, 'Akash', 'akash@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', NULL, '2025-07-10 01:34:05', '2025-08-25 06:40:24', 'admin', '9318432272', 'male', '1753424647.png', 14, '2025-08-25 06:40:24', '2025-09-25 06:40:24', '2025-09-25 06:40:24'),
+(3, 'Rahul Kumar', 'rahul@gmail.com', NULL, '$2y$12$6.BNhC3blzVsKqkHTYNgiesVIey1GCvSl5isQTNv/Lh80II4Glt8e', NULL, '2025-08-19 01:49:52', '2025-08-19 01:49:52', 'customer', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -472,6 +497,13 @@ ALTER TABLE `mid_categories`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
 -- Indexes for table `packages`
@@ -583,7 +615,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `properties`
@@ -631,7 +663,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

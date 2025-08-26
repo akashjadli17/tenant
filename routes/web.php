@@ -77,6 +77,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('packages', PackageController::class);
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', function () {
+        return view('admin.notifications');
+    })->name('notifications.index');
+});
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 

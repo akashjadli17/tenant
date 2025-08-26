@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Mass assignable attributes.
      *
      * @var array<int, string>
      */
@@ -26,12 +26,13 @@ class User extends Authenticatable
         'profile_image',
         'user_type',
         'package_id',
+        'package_started_at',   // added
+        'package_renews_at',    // added
         'package_expires_at',
     ];
 
-
     /**
-     * The attributes that should be hidden for serialization.
+     * Attributes hidden for arrays.
      *
      * @var array<int, string>
      */
@@ -41,49 +42,69 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Attribute casting.
      *
      * @return array<string, string>
      */
-
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'package_expires_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at'   => 'datetime',
+            'package_started_at'  => 'datetime', // added
+            'package_renews_at'   => 'datetime', // added
+            'package_expires_at'  => 'datetime',
+            'password'            => 'hashed',
         ];
     }
 
-
+    /* =========================
+     |  Relationships
+     |=========================*/
     public function package()
     {
         return $this->belongsTo(Package::class, 'package_id');
     }
 
-    // 🔹 Helper: check role
-    public function isAdmin()
+    /* =========================
+     |  Helpers / Accessors
+     |=========================*/
+
+    // role check
+    public function isAdmin(): bool
     {
         return $this->user_type === 'admin';
     }
-
 
     public function hasPackage(): bool
     {
         return !is_null($this->package_id);
     }
 
+    /**
+     * Days until the package expires.
+     * Returns:
+     *   null -> unknown (no expiry date)
+     *   0    -> already expired (or expires today)
+     *   >0   -> days remaining
+     *   <0   -> days in the past (shouldn't happen if you clamp to 0 in UI)
+     */
     public function daysUntilPackageExpires(): ?int
     {
         if (is_null($this->package_expires_at)) {
-            return null; // unknown
+            return null;
         }
 
-        // Negative if already expired
         return now()->diffInDays($this->package_expires_at, false);
     }
 
-    
+    /**
+     * Whether to show the package chooser on dashboard.
+     * True when:
+     *  - user never chose a package, or
+     *  - expiry date missing, or
+     *  - already expired, or
+     *  - within N days of expiring
+     */
     public function shouldSeePackageChooser(int $withinDays = 10): bool
     {
         if (!$this->hasPackage()) {
@@ -100,5 +121,4 @@ class User extends Authenticatable
 
         return $this->package_expires_at->lte(now()->addDays($withinDays));
     }
-
 }

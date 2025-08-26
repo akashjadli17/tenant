@@ -5,6 +5,18 @@
 @section('content')
 
 
+   {{-- Notifications --}}
+    @auth
+        @foreach(auth()->user()->unreadNotifications as $notif)
+            <div class="alert alert-warning py-2 mb-2">
+                <strong>{{ $notif->data['title'] }}</strong> –
+                {{ $notif->data['message'] }}
+                <a href="{{ $notif->data['action_url'] ?? '#' }}" class="ms-2">Renew</a>
+            </div>
+        @endforeach
+    @endauth
+
+
     @if(!is_null($daysLeft) && $daysLeft <= 10 && $daysLeft> 0)
 
         <div class="alert alert-warning d-flex align-items-center" role="alert">
