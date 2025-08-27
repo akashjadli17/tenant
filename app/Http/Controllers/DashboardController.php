@@ -19,29 +19,27 @@ class DashboardController extends Controller
 
         $totalProperties = Property::count();
         $totalUnits      = Unit::count();
-        $totalInvoice    = 0; // TODO: replace with your real totals
-        $totalExpense    = 0; // TODO: replace with your real totals
+        $totalInvoice    = 0;  
+        $totalExpense    = 0;  
 
         $user         = Auth::user();
         $showPackages = $user->shouldSeePackageChooser(10);
         $daysLeft     = $user->daysUntilPackageExpires();
 
-        // NOTE: status is usually 1/0 in your model. Use 1 (active).
         $packages = $showPackages
             ? Package::where('status', 1)->orderBy('price')->get()
             : collect();
 
-        // OPTIONAL: create a single “expiring soon” DB notification when ≤10 days
-       if (!is_null($daysLeft) && $daysLeft > 0 && $daysLeft <= 10) {
-    $already = $user->notifications()
-        ->where('type', PackageExpiringSoon::class)
-        ->whereJsonContains('data->expires_at', optional($user->package_expires_at)->toDateString())
-        ->exists();
+        if (!is_null($daysLeft) && $daysLeft > 0 && $daysLeft <= 10) {
+            $already = $user->notifications()
+                ->where('type', PackageExpiringSoon::class)
+                ->whereJsonContains('data->expires_at', optional($user->package_expires_at)->toDateString())
+                ->exists();
 
-    if (!$already) {
-        $user->notify(new PackageExpiringSoon($user->package_expires_at, $daysLeft));
-    }
-}
+            if (!$already) {
+                $user->notify(new PackageExpiringSoon($user->package_expires_at, $daysLeft));
+            }
+        }
 
         return view('admin.dashboard', compact(
             'totalProperties',
@@ -54,10 +52,7 @@ class DashboardController extends Controller
         ));
     }
 
-    /**
-     * Apply a package to the current user.
-     * Sets: package_started_at, package_renews_at, package_expires_at (end of current cycle)
-     */
+ 
     public function choosePackage(Package $package)
     {
         $user  = auth()->user();

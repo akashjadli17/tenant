@@ -53,7 +53,26 @@
 
                     <!-- Property Details -->
                     <div class="tab-pane fade show active" id="details">
-                        <div class="grid grid-cols-1 md:grid-cols-3 mb-3 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-4 mb-3 gap-4">
+
+                        @if(auth()->user()->isAdmin())
+                            <div class="mb-3">
+                                <label class="form-label">Owner</label>
+                                <select name="owner_id" class="form-select" required>
+                                    <option value="">— Select Owner —</option>
+                                    @foreach(\App\Models\User::orderBy('name')->get() as $u)
+                                        <option value="{{ $u->id }}"
+                                            @selected(old('owner_id', $property->owner_id ?? null) == $u->id)>
+                                            {{ $u->name }} ({{ $u->email }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @else
+                            {{-- Non-admin: force their own id --}}
+                            <input type="hidden" name="owner_id" value="{{ auth()->id() }}">
+                        @endif
+                            
                             <div>
                                 <label class="form-label">Type</label>
                                 <select class="form-select" name="type" required>

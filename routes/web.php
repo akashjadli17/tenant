@@ -94,8 +94,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 });
 
-
-
 Route::prefix('admin')->group(function () {
     // Use AjaxCategoryController for all dynamic AJAX-based category fetching
     Route::get('get-top-categories/{gender_id}', [AjaxCategoryController::class, 'getTopCategories'])->name('ajax.getTopCategories');
@@ -117,11 +115,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('careers', CareerDoctorController::class);
 });
-
-
-
-
-
+ 
 // Must match fetch() URL
 Route::post('/admin/doctor_details/toggle-status/{id}', [DoctorController::class, 'toggleStatus'])->name('doctor_details.toggleStatus');
 

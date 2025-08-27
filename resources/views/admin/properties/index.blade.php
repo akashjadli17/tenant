@@ -70,7 +70,16 @@
                                 {{ $property->units->sum(fn($unit) => $unit->bedroom + $unit->kitchen + $unit->bath) }}
                                 Rooms
                             </div>
+
+                           
                         </div>
+                        @if(auth()->user()?->isAdmin())
+                            <p class="text-sm text-gray-600 mb-1">
+                                <strong>Owner:</strong> {{ optional($property->owner)->name ?? '—' }}
+                            </p>
+                        @endif
+
+
                         <p class="text-gray-600 text-sm mb-3">{{ Str::limit($property->description, 100) }}</p>
                         <span
                             class="inline-block px-3 py-1 rounded-full text-xs font-semibold {{ $property->type == 'own' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">
