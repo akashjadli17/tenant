@@ -14,7 +14,6 @@
                 <strong class="font-bold">Success!</strong>
                 <span class="block sm:inline">{{ session('success') }}</span>
             </div>
-
             @endif
 
             <!-- Validation Errors -->
@@ -27,7 +26,6 @@
                     @endforeach
                 </ul>
             </div>
-
             @endif
 
 

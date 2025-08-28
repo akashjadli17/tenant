@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2025 at 08:57 AM
+-- Generation Time: Aug 28, 2025 at 07:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -86,6 +86,17 @@ CREATE TABLE `jobs` (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
+(1, 'default', '{\"uuid\":\"0ab018b5-f495-4183-8464-b61b1fb7bbbf\",\"displayName\":\"App\\\\Notifications\\\\PackageExpiringSoon\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:37:\\\"App\\\\Notifications\\\\PackageExpiringSoon\\\":3:{s:9:\\\"expiresAt\\\";O:25:\\\"Illuminate\\\\Support\\\\Carbon\\\":3:{s:4:\\\"date\\\";s:26:\\\"2025-09-05 06:58:37.000000\\\";s:13:\\\"timezone_type\\\";i:3;s:8:\\\"timezone\\\";s:3:\\\"UTC\\\";}s:8:\\\"daysLeft\\\";i:9;s:2:\\\"id\\\";s:36:\\\"00cd40c4-7074-49b7-9551-684e601aa998\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1756191579, 1756191579),
+(2, 'default', '{\"uuid\":\"9830e4c2-ce97-4f7b-a5e8-bac2cc9e33fa\",\"displayName\":\"App\\\\Notifications\\\\PackageExpiringSoon\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:37:\\\"App\\\\Notifications\\\\PackageExpiringSoon\\\":3:{s:9:\\\"expiresAt\\\";O:25:\\\"Illuminate\\\\Support\\\\Carbon\\\":3:{s:4:\\\"date\\\";s:26:\\\"2025-09-05 06:58:37.000000\\\";s:13:\\\"timezone_type\\\";i:3;s:8:\\\"timezone\\\";s:3:\\\"UTC\\\";}s:8:\\\"daysLeft\\\";i:9;s:2:\\\"id\\\";s:36:\\\"089beded-9dc1-45d9-843a-e6bb78eb4002\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1756191598, 1756191598),
+(3, 'default', '{\"uuid\":\"7de11ff1-8fd4-44a8-92c9-565ab4059e7c\",\"displayName\":\"App\\\\Notifications\\\\PackageExpiringSoon\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:37:\\\"App\\\\Notifications\\\\PackageExpiringSoon\\\":3:{s:9:\\\"expiresAt\\\";O:25:\\\"Illuminate\\\\Support\\\\Carbon\\\":3:{s:4:\\\"date\\\";s:26:\\\"2025-09-05 06:58:37.000000\\\";s:13:\\\"timezone_type\\\";i:3;s:8:\\\"timezone\\\";s:3:\\\"UTC\\\";}s:8:\\\"daysLeft\\\";i:9;s:2:\\\"id\\\";s:36:\\\"ec8db261-b23a-4ab9-aa50-46c940e20ae4\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1756191605, 1756191605),
+(4, 'default', '{\"uuid\":\"dd9f8286-a19b-435d-b2fb-5c17f151f1a4\",\"displayName\":\"App\\\\Notifications\\\\PackageExpiringSoon\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:37:\\\"App\\\\Notifications\\\\PackageExpiringSoon\\\":3:{s:9:\\\"expiresAt\\\";O:25:\\\"Illuminate\\\\Support\\\\Carbon\\\":3:{s:4:\\\"date\\\";s:26:\\\"2025-09-05 06:58:37.000000\\\";s:13:\\\"timezone_type\\\";i:3;s:8:\\\"timezone\\\";s:3:\\\"UTC\\\";}s:8:\\\"daysLeft\\\";i:9;s:2:\\\"id\\\";s:36:\\\"174034e9-518b-4760-a5aa-cad92d81752f\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1756191609, 1756191609),
+(5, 'default', '{\"uuid\":\"b2f566e0-0377-411d-92c7-bbc5b15a4751\",\"displayName\":\"App\\\\Notifications\\\\PackageExpiringSoon\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:2;}s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:37:\\\"App\\\\Notifications\\\\PackageExpiringSoon\\\":3:{s:9:\\\"expiresAt\\\";O:25:\\\"Illuminate\\\\Support\\\\Carbon\\\":3:{s:4:\\\"date\\\";s:26:\\\"2025-09-05 06:58:37.000000\\\";s:13:\\\"timezone_type\\\";i:3;s:8:\\\"timezone\\\";s:3:\\\"UTC\\\";}s:8:\\\"daysLeft\\\";i:9;s:2:\\\"id\\\";s:36:\\\"ba449c7d-4497-4c59-a96f-edf4b38c9bb8\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:8:\\\"database\\\";}}\"}}', 0, NULL, 1756191688, 1756191688);
 
 -- --------------------------------------------------------
 
@@ -191,7 +202,7 @@ CREATE TABLE `packages` (
 --
 
 INSERT INTO `packages` (`id`, `package_type`, `price`, `interval`, `interval_count`, `auto_renews`, `trial_days`, `total_cycles`, `billing_cycle`, `currency`, `features`, `status`, `created_at`, `updated_at`) VALUES
-(14, 'basic', 399.00, 'month', 1, 1, NULL, NULL, 'Monthly', 'INR', '\"[{\\\"name\\\":\\\"Manage up to 10 Tenants\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Basic Document Storage\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Secure Cloud Hosting\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Limited Email Support\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Multi-Property Management\\\",\\\"checked\\\":\\\"0\\\"},{\\\"name\\\":\\\"Custom Notifications\\\",\\\"checked\\\":\\\"0\\\"}]\"', 'active', '2025-08-16 02:05:42', '2025-08-25 05:26:21'),
+(14, 'basic', 399.00, 'month', 1, 1, NULL, NULL, 'Yearly', 'INR', '\"[{\\\"name\\\":\\\"Manage up to 10 Tenants\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Basic Document Storage\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Secure Cloud Hosting\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Limited Email Support\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Multi-Property Management\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Custom Notifications\\\",\\\"checked\\\":\\\"1\\\"}]\"', 'active', '2025-08-16 02:05:42', '2025-08-26 01:31:14'),
 (15, 'standard', 799.00, 'month', 1, 1, NULL, NULL, 'Monthly', 'INR', '\"[{\\\"name\\\":\\\"Manage up to 50 Tenants\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Advanced Document Storage\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Multi-Property Management\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"SMS & Email Notifications\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Email + Chat Support\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Custom Branding\\\",\\\"checked\\\":\\\"0\\\"}]\"', 'active', '2025-08-16 02:07:10', '2025-08-25 05:26:27'),
 (17, 'premium', 1499.00, 'month', 1, 1, NULL, NULL, 'Monthly', 'INR', '\"[{\\\"name\\\":\\\"Unlimited Tenants\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Unlimited Property Management\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Custom Notifications & Reminders\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Custom Branding & Logo\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Priority 24\\\\\\/7 Support\\\",\\\"checked\\\":\\\"1\\\"},{\\\"name\\\":\\\"Automated PDF Reports\\\",\\\"checked\\\":\\\"1\\\"}]\"', 'active', '2025-08-16 02:11:00', '2025-08-16 02:11:00');
 
@@ -224,6 +235,8 @@ CREATE TABLE `properties` (
   `city` varchar(255) NOT NULL,
   `zip_code` varchar(255) NOT NULL,
   `address` text NOT NULL,
+  `owner_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `added_by` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -232,17 +245,18 @@ CREATE TABLE `properties` (
 -- Dumping data for table `properties`
 --
 
-INSERT INTO `properties` (`id`, `type`, `name`, `description`, `thumbnail`, `country`, `state`, `city`, `zip_code`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'lease', 'jaineet Taneja', 'as', 'thumbnails/6nkadQA1pG2uW79Ah4Hcl2ROtJjE7PmVi0IlOzyn.jpg', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:10:50', '2025-08-02 01:10:50'),
-(2, 'lease', 'sec', 'zx', 'thumbnails/6SRjgxkEs2O6OEXqBK81e6EUErL3Xgp6yVltML33.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:24:44', '2025-08-02 01:24:44'),
-(3, 'lease', 'sec', 'zx', 'thumbnails/vtbGR4MXxwf2N5sEqdWS1VkWQccT2xH7vWQeegTd.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:24:51', '2025-08-02 01:24:51'),
-(4, 'lease', 'sec', 'zx', 'thumbnails/NgJgD4ZpVhl8SdcbtoA68SmIGCjSVcMu8ypLR7jh.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:01', '2025-08-02 01:25:01'),
-(5, 'lease', 'sec', 'zx', 'thumbnails/bE01D4Xw3VDKrvGDDcpYqvhikjvJcc360KioZvT3.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:09', '2025-08-02 01:25:09'),
-(6, 'own', 'asd', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:30', '2025-08-02 01:25:30'),
-(7, 'own', 'jaineet Tanejs', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:25:46', '2025-08-02 01:25:46'),
-(8, 'lease', 'jaineet Tad', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', '2025-08-02 01:26:00', '2025-08-02 01:26:00'),
-(9, 'own', 'abc jai x', 'sd', NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Ncartment', '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
-(10, 'own', 'noifsq', 'this is noida proprty', 'thumbnails/xPaumuoucRrJsabP8WSbjJyUozKV0agTdKqgVksc.jpg', 'india', 'Uttar Pradesh', 'noida', '201301', 'sector 2Noida', '2025-08-04 00:02:48', '2025-08-04 00:02:48');
+INSERT INTO `properties` (`id`, `type`, `name`, `description`, `thumbnail`, `country`, `state`, `city`, `zip_code`, `address`, `owner_id`, `added_by`, `created_at`, `updated_at`) VALUES
+(1, 'lease', 'jaineet Taneja', 'as', 'thumbnails/6nkadQA1pG2uW79Ah4Hcl2ROtJjE7PmVi0IlOzyn.jpg', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', 3, 3, '2025-08-02 01:10:50', '2025-08-02 01:10:50'),
+(2, 'lease', 'sec', 'zx', 'thumbnails/6SRjgxkEs2O6OEXqBK81e6EUErL3Xgp6yVltML33.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', NULL, NULL, '2025-08-02 01:24:44', '2025-08-02 01:24:44'),
+(3, 'lease', 'sec', 'zx', 'thumbnails/vtbGR4MXxwf2N5sEqdWS1VkWQccT2xH7vWQeegTd.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', NULL, NULL, '2025-08-02 01:24:51', '2025-08-02 01:24:51'),
+(4, 'lease', 'sec', 'zx', 'thumbnails/NgJgD4ZpVhl8SdcbtoA68SmIGCjSVcMu8ypLR7jh.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', NULL, NULL, '2025-08-02 01:25:01', '2025-08-02 01:25:01'),
+(5, 'lease', 'sec', 'zx', 'thumbnails/bE01D4Xw3VDKrvGDDcpYqvhikjvJcc360KioZvT3.webp', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector23Noida Falt number 66 c sunshine Appartment', NULL, NULL, '2025-08-02 01:25:09', '2025-08-02 01:25:09'),
+(6, 'own', 'asd', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', NULL, NULL, '2025-08-02 01:25:30', '2025-08-02 01:25:30'),
+(7, 'own', 'jaineet Tanejs', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', NULL, NULL, '2025-08-02 01:25:46', '2025-08-02 01:25:46'),
+(8, 'lease', 'jaineet Tad', NULL, NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', NULL, NULL, '2025-08-02 01:26:00', '2025-08-02 01:26:00'),
+(9, 'own', 'abc jai x', 'sd', NULL, 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Ncartment', NULL, NULL, '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
+(10, 'own', 'noifsq', 'this is noida proprty', 'thumbnails/xPaumuoucRrJsabP8WSbjJyUozKV0agTdKqgVksc.jpg', 'india', 'Uttar Pradesh', 'noida', '201301', 'sector 2Noida', NULL, NULL, '2025-08-04 00:02:48', '2025-08-04 00:02:48'),
+(11, 'lease', 'jais', NULL, 'thumbnails/8rZ0gyXLIPEVrjfZwkDaS4hv6ETRvXM55n0KizTh.png', 'India', 'Uttar Pradesh', 'noida', '201301', 'sector 99 Noida Falt number 66 c sunshine Appartment', 3, 3, '2025-08-27 02:30:25', '2025-08-27 02:30:25');
 
 -- --------------------------------------------------------
 
@@ -413,7 +427,8 @@ INSERT INTO `units` (`id`, `property_id`, `name`, `bedroom`, `kitchen`, `bath`, 
 (1, 9, 'acs', 1, 1, 1, 1.00, 'weekly', 1111, 'fixed', 21.00, 'fixed', 21.00, 12.00, 'e', '2025-08-02 01:37:30', '2025-08-02 01:37:30'),
 (2, 9, 'Myrsdf', 34, 34, 34, 1.00, 'monthly', NULL, 'fixed', 43.00, 'fixed', 34.00, 43.00, '4', '2025-08-04 02:12:06', '2025-08-04 02:12:06'),
 (3, 10, 'Myra Luxe Aesthetics', 5, 5, 5, 5.00, 'monthly', 1, 'percentage', 30000.00, 'fixed', 500.00, 30000.00, 'j', '2025-08-04 02:18:33', '2025-08-04 02:18:33'),
-(4, 8, 'erter', 54, 54, 54, 54.00, 'monthly', 30, 'fixed', 54.00, 'fixed', 54.00, 54.00, '54', '2025-08-04 23:25:59', '2025-08-04 23:25:59');
+(4, 8, 'erter', 54, 54, 54, 54.00, 'monthly', 30, 'fixed', 54.00, 'fixed', 54.00, 54.00, '54', '2025-08-04 23:25:59', '2025-08-04 23:25:59'),
+(5, 11, 'Myra Luxe Aesthetics', 3, 3, 3, 39000.00, 'monthly', 12, 'fixed', 1000.00, 'fixed', 2000.00, 20.00, 'sz', '2025-08-27 02:31:24', '2025-08-27 02:31:24');
 
 -- --------------------------------------------------------
 
@@ -430,7 +445,7 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `user_type` enum('admin','customer') DEFAULT 'customer',
+  `user_type` enum('admin','owner','tenant') DEFAULT 'owner',
   `phone` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `profile_image` varchar(255) DEFAULT NULL,
@@ -446,8 +461,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `user_type`, `phone`, `gender`, `profile_image`, `package_id`, `package_started_at`, `package_renews_at`, `package_expires_at`) VALUES
 (1, 'admin', 'admin@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', 'P3a0pB2ljjSVeZDtkE170BdJ7Gm3GxvjShNaBuyirNHlTL1BlzjAc0wWReKF', '2025-07-01 00:47:37', '2025-08-13 01:02:40', 'admin', '9999111186', 'male', '1755062769.jpg', 1, NULL, NULL, '2025-09-13 01:02:40'),
-(2, 'Akash', 'akash@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', NULL, '2025-07-10 01:34:05', '2025-08-25 06:40:24', 'admin', '9318432272', 'male', '1753424647.png', 14, '2025-08-25 06:40:24', '2025-09-25 06:40:24', '2025-09-25 06:40:24'),
-(3, 'Rahul Kumar', 'rahul@gmail.com', NULL, '$2y$12$6.BNhC3blzVsKqkHTYNgiesVIey1GCvSl5isQTNv/Lh80II4Glt8e', NULL, '2025-08-19 01:49:52', '2025-08-19 01:49:52', 'customer', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(2, 'Akash', 'akash@gmail.com', NULL, '$2y$12$Qt9RL7FahBIJiXVCAD1k5uaYegpEcZMlViH6g2nBM5bRzyMSecI9W', NULL, '2025-07-10 01:34:05', '2025-08-26 01:32:19', 'admin', '9318432272', 'male', '1753424647.png', 14, '2025-08-26 01:32:19', '2025-09-26 01:32:19', '2025-09-26 01:32:19'),
+(3, 'Rahul Kumar', 'rahul@gmail.com', NULL, '$2y$12$6.BNhC3blzVsKqkHTYNgiesVIey1GCvSl5isQTNv/Lh80II4Glt8e', NULL, '2025-08-19 01:49:52', '2025-08-19 01:49:52', 'owner', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -521,7 +536,9 @@ ALTER TABLE `password_reset_tokens`
 -- Indexes for table `properties`
 --
 ALTER TABLE `properties`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `properties_owner_id_index` (`owner_id`),
+  ADD KEY `properties_added_by_index` (`added_by`);
 
 --
 -- Indexes for table `property_images`
@@ -597,7 +614,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `mid_categories`
@@ -621,7 +638,7 @@ ALTER TABLE `packages`
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `property_images`
@@ -657,7 +674,7 @@ ALTER TABLE `top_categories`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -674,6 +691,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `mid_categories`
   ADD CONSTRAINT `mid_categories_ibfk_1` FOREIGN KEY (`top_category_id`) REFERENCES `top_categories` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `properties`
+--
+ALTER TABLE `properties`
+  ADD CONSTRAINT `properties_added_by_foreign` FOREIGN KEY (`added_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `properties_owner_id_foreign` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `property_images`
