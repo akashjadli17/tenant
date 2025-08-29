@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('myraluxxe@gmail.com|127.0.0.1', 'i:1;', 1755148119),
-('myraluxxe@gmail.com|127.0.0.1:timer', 'i:1755148119;', 1755148119),
+('lenant@gmail.com|127.0.0.1', 'i:1;', 1755148119),
+('lenant@gmail.com|127.0.0.1:timer', 'i:1755148119;', 1755148119),
 ('test@gmail.com|106.219.160.186', 'i:2;', 1754548393),
 ('test@gmail.com|106.219.160.186:timer', 'i:1754548393;', 1754548393);
 

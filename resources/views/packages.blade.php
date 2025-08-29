@@ -1,11 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'Tenants Management')
+@section('title', 'Our Pricing')
 
 @section('content')
     <main class="main">
-
-        <!-- Breadcrumb -->
         <div class="site-breadcrumb" style="background: url('{{ asset('assets/img/breadcrumb/01.jpg') }}');">
             <div class="container">
                 <h2 class="breadcrumb-title">Our Pricing</h2>
@@ -16,216 +14,118 @@
             </div>
         </div>
 
-        <!-- Packages Section -->
-        <div class="pricing-area py-5">
-            <div class="container">
-                <div class="row">
-                    @forelse($packages as $package)
-                        <div class="col-md-6 col-lg-6 mb-4">
-                            <div class="package-card d-flex">
-                                <!-- Left Content -->
-                                <div class="package-content flex-grow-1">
-                                    <div class="package-label">{{ $package->package_type }}</div>
-                                    <div class="package-title">{{ $package->title }}</div>
-
-                                    <div class="price-section">
-                                        <span class="old-price">₹ {{ number_format($package->original_price) }}</span>
-                                        <span class="price">₹ {{ number_format($package->discounted_price) }}</span>
+        
+        <!-- pricing area -->
+        <section id="pricing">
+            <div class="pricing-area py-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 mx-auto">
+                            <div class="site-heading text-center wow fadeInDown" data-wow-delay=".25s">
+                                <h2 class="site-title">Let's Check Our <span>Pricing</span> Plan For You</h2>
+                                <div class="heading-divider"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4 g-lg-5">
+                        <!-- Basic Plan -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="pricing-item active wow fadeInUp" data-wow-delay=".25s">
+                                <div class="pricing-header">
+                                    <h5>Basic</h5>
+                                </div>
+                                <div class="pricing-price">
+                                    <div class="pricing-icon">
+                                        <img src="assets/img/icon/building.svg" alt="">
                                     </div>
-
-                                    <ul class="services">
-                                      @if (is_array($package->features))
-                                            @foreach ($package->features as $feature)
-                                                <li>{{ $feature }}</li>
-                                            @endforeach
-                                        @endif
-
-                                    </ul>
-
-                                    <div class="package-bottom">
-                                        <button class="add-to-cart">ADD TO CART</button>
+                                    <div class="pricing-amount">
+                                        <strong>₹359</strong><span class="pricing-amount-type">/Monthly</span>
                                     </div>
                                 </div>
-
-                                <!-- Right Image -->
-                                <div class="package-image">
-                                    @if ($package->package_image)
-                                        <img src="{{ asset('storage/' . $package->package_image) }}" alt="Package Image"
-                                            class="person-img" />
-                                    @else
-                                        <img src="{{ asset('images/default-package.png') }}" alt="Default Image"
-                                            class="person-img" />
-                                    @endif
+                                <div class="pricing-btn">
+                                    <a href="pricing.html" class="theme-btn2">Purchase Now <i
+                                            class="fas fa-arrow-right"></i></a>
+                                </div>
+                                <div class="pricing-feature">
+                                    <ul>
+                                        <li><i class="fas fa-check-circle"></i>Manage up to 10 Tenants</li>
+                                        <li><i class="fas fa-check-circle"></i>Basic Document Storage</li>
+                                        <li><i class="fas fa-check-circle"></i>Secure Cloud Hosting</li>
+                                        <li><i class="fas fa-check-circle"></i>Limited Email Support</li>
+                                        <li><i class="fas fa-xmark-circle not-include"></i>Multi-Property Management
+                                        </li>
+                                        <li><i class="fas fa-xmark-circle not-include"></i>Custom Notifications</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    @empty
-                        <div class="col-12 text-center">
-                            <p>No packages available at the moment. Please check back later.</p>
+
+                        <!-- Standard Plan -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="pricing-item active wow fadeInDown" data-wow-delay=".25s">
+                                <div class="pricing-header">
+                                    <h5>Standard</h5>
+                                </div>
+                                <div class="pricing-price">
+                                    <div class="pricing-icon">
+                                        <img src="assets/img/icon/building.svg" alt="">
+                                    </div>
+                                    <div class="pricing-amount">
+                                        <strong>₹559</strong><span class="pricing-amount-type">/Monthly</span>
+                                    </div>
+                                </div>
+                                <div class="pricing-btn">
+                                    <a href="pricing.html" class="theme-btn2">Purchase Now <i
+                                            class="fas fa-arrow-right"></i></a>
+                                </div>
+                                <div class="pricing-feature">
+                                    <ul>
+                                        <li><i class="fas fa-check-circle"></i>Manage up to 50 Tenants</li>
+                                        <li><i class="fas fa-check-circle"></i>Advanced Document Storage</li>
+                                        <li><i class="fas fa-check-circle"></i>Multi-Property Management</li>
+                                        <li><i class="fas fa-check-circle"></i>SMS & Email Notifications</li>
+                                        <li><i class="fas fa-check-circle"></i>Email + Chat Support</li>
+                                        <li><i class="fas fa-xmark-circle not-include"></i>Custom Branding</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    @endforelse
+
+                        <!-- Premium Plan -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="pricing-item active wow fadeInUp" data-wow-delay=".25s">
+                                <div class="pricing-header">
+                                    <h5>Premium</h5>
+                                </div>
+                                <div class="pricing-price">
+                                    <div class="pricing-icon">
+                                        <img src="assets/img/icon/building.svg" alt="">
+                                    </div>
+                                    <div class="pricing-amount">
+                                        <strong>₹959</strong><span class="pricing-amount-type">/Monthly</span>
+                                    </div>
+                                </div>
+                                <div class="pricing-btn">
+                                    <a href="pricing.html" class="theme-btn2">Purchase Now <i
+                                            class="fas fa-arrow-right"></i></a>
+                                </div>
+                                <div class="pricing-feature">
+                                    <ul>
+                                        <li><i class="fas fa-check-circle"></i>Unlimited Tenants</li>
+                                        <li><i class="fas fa-check-circle"></i>Unlimited Property Management</li>
+                                        <li><i class="fas fa-check-circle"></i>Custom Notifications & Reminders</li>
+                                        <li><i class="fas fa-check-circle"></i>Custom Branding & Logo</li>
+                                        <li><i class="fas fa-check-circle"></i>Priority 24/7 Support</li>
+                                        <li><i class="fas fa-check-circle"></i>Automated PDF Reports</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+        <!-- pricing area end -->
+
     </main>
-
-
-    <style>
-        .package-card {
-            background: #fff;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 20px;
-            height: auto;
-            flex-wrap: wrap;
-        }
-
-        .package-content {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .package-label {
-            background: #e0e0e0;
-            color: #333;
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .package-title {
-            font-size: 18px;
-            font-weight: 500;
-            margin: 10px 0 20px;
-            color: #2c3e50;
-        }
-
-        .price-section {
-            margin-bottom: 20px;
-        }
-
-        .price {
-            font-size: 26px;
-            color: #000;
-            font-weight: 600;
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: #c00;
-            font-size: 18px;
-            margin-right: 10px;
-        }
-
-        .services {
-            margin: 20px 0;
-            padding: 0;
-        }
-
-        .services li {
-            list-style: none;
-            margin: 10px 0;
-            position: relative;
-            padding-left: 30px;
-            font-size: 14px;
-            color: #34495e;
-        }
-
-        .services li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: #f28c28;
-            font-weight: bold;
-        }
-
-        .add-to-cart {
-            background: #000;
-            color: #fff;
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .add-to-cart:hover {
-            background: #333;
-        }
-
-        .package-bottom {
-            margin-top: 20px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .package-image img.person-img {
-            height: 255px;
-            width: auto;
-            max-width: 220px;
-            border-radius: 12px;
-            /* object-fit: cover; */
-        }
-
-        /* ✅ MOBILE RESPONSIVENESS */
-        @media (max-width: 768px) {
-            .package-card {
-                flex-direction: column;
-                align-items: center;
-                padding: 20px;
-                text-align: center;
-            }
-
-            .package-title {
-                font-size: 20px;
-            }
-
-            .price {
-                font-size: 22px;
-            }
-
-            .old-price {
-                font-size: 16px;
-            }
-
-            .services li {
-                font-size: 15px;
-                padding-left: 26px;
-            }
-
-            .add-to-cart {
-                width: 100%;
-                padding: 12px;
-                font-size: 16px;
-            }
-
-            .package-bottom {
-                justify-content: center;
-            }
-
-            .package-image img.person-img {
-                margin-top: 20px;
-                max-width: 100%;
-                height: auto;
-            }
-        }
-    </style>
-
-
-
 @endsection

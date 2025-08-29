@@ -1,6 +1,6 @@
 @extends('layouts.adminmaster')
 
-@section('title', 'Tenant Aesthetic Pvt Ltd')
+@section('title', 'Tenant Pvt Ltd')
 
 @section('content')
 

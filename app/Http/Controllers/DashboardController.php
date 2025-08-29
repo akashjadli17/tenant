@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Notifications\PackageExpiringSoon;
 use App\Models\Package;
 use App\Models\Property;
 use App\Models\Unit;
-use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -13,32 +13,54 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->isAdmin()) {
-            abort(403);
+        $user = Auth::user();
+
+        // Common variables
+        $totalProperties = 0;
+        $totalUnits      = 0;
+        $totalInvoice    = 0;
+        $totalExpense    = 0;
+        $packages        = collect();
+        $showPackages    = false;
+        $daysLeft        = null;
+
+        if ($user->user_type === 'admin') {
+            // Full stats
+            $totalProperties = Property::count();
+            $totalUnits      = Unit::count();
+
+            $showPackages = $user->shouldSeePackageChooser(10);
+            $daysLeft     = $user->daysUntilPackageExpires();
+
+            $packages = $showPackages
+                ? Package::where('status', 1)->orderBy('price')->get()
+                : collect();
+
+            // Notify if package expiring soon
+            if (!is_null($daysLeft) && $daysLeft > 0 && $daysLeft <= 10) {
+                $already = $user->notifications()
+                    ->where('type', PackageExpiringSoon::class)
+                    ->whereJsonContains('data->expires_at', optional($user->package_expires_at)->toDateString())
+                    ->exists();
+
+                if (!$already) {
+                    $user->notify(new PackageExpiringSoon($user->package_expires_at, $daysLeft));
+                }
+            }
         }
 
-        $totalProperties = Property::count();
-        $totalUnits      = Unit::count();
-        $totalInvoice    = 0;  
-        $totalExpense    = 0;  
+        if ($user->user_type === 'owner') {
+            // Only owner’s properties/units
+            $totalProperties = Property::where('owner_id', $user->id)->count();
+            $totalUnits      = Unit::whereIn('property_id', 
+                                Property::where('owner_id', $user->id)->pluck('id')
+                              )->count();
+        }
 
-        $user         = Auth::user();
-        $showPackages = $user->shouldSeePackageChooser(10);
-        $daysLeft     = $user->daysUntilPackageExpires();
-
-        $packages = $showPackages
-            ? Package::where('status', 1)->orderBy('price')->get()
-            : collect();
-
-        if (!is_null($daysLeft) && $daysLeft > 0 && $daysLeft <= 10) {
-            $already = $user->notifications()
-                ->where('type', PackageExpiringSoon::class)
-                ->whereJsonContains('data->expires_at', optional($user->package_expires_at)->toDateString())
-                ->exists();
-
-            if (!$already) {
-                $user->notify(new PackageExpiringSoon($user->package_expires_at, $daysLeft));
-            }
+        if ($user->user_type === 'tenant') {
+            // Only tenant’s unit
+            $totalProperties = 0;
+            $totalUnits      = Unit::where('tenant_id', $user->id)->count();
         }
 
         return view('admin.dashboard', compact(
@@ -48,25 +70,27 @@ class DashboardController extends Controller
             'totalExpense',
             'packages',
             'showPackages',
-            'daysLeft'
+            'daysLeft',
+            'user'
         ));
     }
 
- 
     public function choosePackage(Package $package)
     {
-        $user  = auth()->user();
-        $now   = Carbon::now();
+        $user = auth()->user();
 
-        // cycle basics
+        // Only admin can choose package
+        if ($user->user_type !== 'admin') {
+            abort(403, 'Unauthorized action');
+        }
+
+        $now   = Carbon::now();
         $interval = strtolower($package->interval ?? 'month');   
         $count    = (int) ($package->interval_count ?? 1);
         $trial    = (int) ($package->trial_days ?? 0);
 
-        // start now
         $packageStartedAt = $now->copy();
 
-        // if there is a trial, first “expiry/renewal” is after the trial period
         if ($trial > 0) {
             $firstExpiry = $packageStartedAt->copy()->addDays($trial);
         } else {
@@ -78,30 +102,8 @@ class DashboardController extends Controller
             };
         }
 
-        // we treat “expires_at” as the **end of the current billed period**,
-        // even for auto-renew plans — so the dashboard can show days left.
         $packageRenewsAt  = $firstExpiry->copy();
         $packageExpiresAt = $firstExpiry->copy();
-
-        // If you truly need a “final” expiry for fixed-term plans (no auto_renews + total_cycles),
-        // you can uncomment this block to compute the final end date.
-        /*
-        if (!$package->auto_renews && $package->total_cycles) {
-            $final = $trial > 0
-                ? $packageStartedAt->copy()->addDays($trial)
-                : $packageStartedAt->copy();
-
-            for ($i = 0; $i < $package->total_cycles; $i++) {
-                $final = match ($interval) {
-                    'day'   => $final->addDays($count),
-                    'week'  => $final->addWeeks($count),
-                    'year'  => $final->addYears($count),
-                    default => $final->addMonthsNoOverflow($count),
-                };
-            }
-            $packageExpiresAt = $final;
-        }
-        */
 
         $user->update([
             'package_id'         => $package->id,

@@ -1,6 +1,6 @@
 @extends('layouts.adminmaster')
 
-@section('title', 'Units - Tenant Aesthetic Pvt Ltd')
+@section('title', 'Units - Tenant Pvt Ltd')
 
 @section('content')
 <script src="https://cdn.tailwindcss.com"></script>

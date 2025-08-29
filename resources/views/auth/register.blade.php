@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Register | Myraluxa')
+@section('title', 'Register | Tenant')
 
 @section('content')
 
@@ -31,7 +31,7 @@
 
         .login-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .login-header img {
@@ -118,15 +118,32 @@
 
                 <!-- Right Form -->
                 <div class="register-form-wrapper">
-                    <div class="login-header">
+                    <div class="login-header text-center">
                         <img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo">
-                        <p>Create your Myraluxa account</p>
+                        <p>Sign up for your Tanent account</p>
                     </div>
 
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <!-- Name -->
+                        <!-- User Type Selection -->
+                        <div class="form-group text-center">
+                            <p class="d-block mb-2">Please specify your role</p>
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="user_type" id="owner" value="owner"
+                                    autocomplete="off" required>
+                                <label class="btn btn-outline-dark" for="owner">Owner</label>
+
+                                <input type="radio" class="btn-check" name="user_type" id="tenant" value="tenant"
+                                    autocomplete="off" required>
+                                <label class="btn btn-outline-dark" for="tenant">Tenant</label>
+                            </div>
+                            @error('user_type')
+                                <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Full Name -->
                         <div class="form-group">
                             <label>Full Name</label>
                             <input type="text" name="name" value="{{ old('name') }}" required
@@ -147,7 +164,7 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="form-group">
+                        <div class="form-group position-relative">
                             <label>Password</label>
                             <input type="password" id="password" name="password" required placeholder="Your Password">
                             <i class="fa fa-eye-slash toggle-password" onclick="togglePassword('password')"
@@ -158,7 +175,7 @@
                         </div>
 
                         <!-- Confirm Password -->
-                        <div class="form-group">
+                        <div class="form-group position-relative">
                             <label>Confirm Password</label>
                             <input type="password" id="password_confirmation" name="password_confirmation" required
                                 placeholder="Confirm Password">
@@ -169,13 +186,13 @@
                             @enderror
                         </div>
 
-                        <!-- Terms & Conditions Checklist Style -->
+                        <!-- Terms -->
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" id="terms" required>
                             <label class="form-check-label" for="terms">
                                 I accept the
-                                <a href="{{ url('/terms') }}" target="_blank" style="color: black;">Terms &
-                                    Conditions</a> and
+                                <a href="{{ url('/terms') }}" target="_blank" style="color: black;">Terms & Conditions</a>
+                                and
                                 <a href="{{ url('/privacy-policies') }}" target="_blank" style="color: black;">Privacy
                                     Policy</a>
                             </label>
@@ -186,11 +203,6 @@
                         </button>
                     </form>
 
-                    {{-- <div class="login-footer">
-                        <p>Already have an account? <a href="{{ route('login') }}">Login</a>.</p>
-                    </div> --}}
-
-
                     <div class="d-flex justify-content-center align-items-center mt-3">
                         <a href="{{ route('login') }}" class="text-dark">
                             Already have an account? <strong>Login</strong>
@@ -199,6 +211,18 @@
                 </div>
             </div>
         </div>
+
+        </div>
+
+        <script>
+            // Show form only after selecting user type
+            document.querySelectorAll("input[name='user_type']").forEach(el => {
+                el.addEventListener("change", function() {
+                    document.getElementById("remaining-form").style.display = "block";
+                });
+            });
+        </script>
+
 
     </main>
 
