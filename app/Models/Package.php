@@ -28,4 +28,16 @@ class Package extends Model
         'trial_days'     => 'integer',
         'total_cycles'   => 'integer',
     ];
+
+    // Always encode array before saving
+    public function setFeaturesAttribute($value)
+    {
+        $this->attributes['features'] = is_array($value) ? json_encode($value) : $value;
+    }
+
+    // Always decode JSON when retrieving
+    public function getFeaturesAttribute($value)
+    {
+        return json_decode($value, true) ?? [];
+    }
 }

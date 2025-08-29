@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Package;
 
 class IndexController extends Controller
 {
@@ -11,8 +12,13 @@ class IndexController extends Controller
         return view('index'); // your homepage
     }
 
-    public function packages()
+    public function packages(Request $request)
     {
-        return view('packages'); // points to resources/views/packages.blade.php
+        $packages = Package::query()
+            ->where('status', 'active') // only active plans
+            ->orderBy('price')
+            ->get();
+
+        return view('packages', compact('packages'));
     }
 }

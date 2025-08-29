@@ -14,7 +14,6 @@
             </div>
         </div>
 
-        
         <!-- pricing area -->
         <section id="pricing">
             <div class="pricing-area py-80">
@@ -27,105 +26,85 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row g-4 g-lg-5">
-                        <!-- Basic Plan -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="pricing-item active wow fadeInUp" data-wow-delay=".25s">
-                                <div class="pricing-header">
-                                    <h5>Basic</h5>
-                                </div>
-                                <div class="pricing-price">
-                                    <div class="pricing-icon">
-                                        <img src="assets/img/icon/building.svg" alt="">
+                        @forelse($packages as $package)
+                            <div class="col-md-6 col-lg-4">
+                                <div class="pricing-item active wow fadeInUp" data-wow-delay=".25s">
+                                    <div class="pricing-header">
+                                        <h5>{{ ucfirst($package->package_type) }}</h5>
                                     </div>
-                                    <div class="pricing-amount">
-                                        <strong>₹359</strong><span class="pricing-amount-type">/Monthly</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-btn">
-                                    <a href="pricing.html" class="theme-btn2">Purchase Now <i
-                                            class="fas fa-arrow-right"></i></a>
-                                </div>
-                                <div class="pricing-feature">
-                                    <ul>
-                                        <li><i class="fas fa-check-circle"></i>Manage up to 10 Tenants</li>
-                                        <li><i class="fas fa-check-circle"></i>Basic Document Storage</li>
-                                        <li><i class="fas fa-check-circle"></i>Secure Cloud Hosting</li>
-                                        <li><i class="fas fa-check-circle"></i>Limited Email Support</li>
-                                        <li><i class="fas fa-xmark-circle not-include"></i>Multi-Property Management
-                                        </li>
-                                        <li><i class="fas fa-xmark-circle not-include"></i>Custom Notifications</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Standard Plan -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="pricing-item active wow fadeInDown" data-wow-delay=".25s">
-                                <div class="pricing-header">
-                                    <h5>Standard</h5>
-                                </div>
-                                <div class="pricing-price">
-                                    <div class="pricing-icon">
-                                        <img src="assets/img/icon/building.svg" alt="">
-                                    </div>
-                                    <div class="pricing-amount">
-                                        <strong>₹559</strong><span class="pricing-amount-type">/Monthly</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-btn">
-                                    <a href="pricing.html" class="theme-btn2">Purchase Now <i
-                                            class="fas fa-arrow-right"></i></a>
-                                </div>
-                                <div class="pricing-feature">
-                                    <ul>
-                                        <li><i class="fas fa-check-circle"></i>Manage up to 50 Tenants</li>
-                                        <li><i class="fas fa-check-circle"></i>Advanced Document Storage</li>
-                                        <li><i class="fas fa-check-circle"></i>Multi-Property Management</li>
-                                        <li><i class="fas fa-check-circle"></i>SMS & Email Notifications</li>
-                                        <li><i class="fas fa-check-circle"></i>Email + Chat Support</li>
-                                        <li><i class="fas fa-xmark-circle not-include"></i>Custom Branding</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                                    <div class="pricing-price">
+                                        <div class="pricing-icon">
+                                            <img src="{{ asset('assets/img/icon/building.svg') }}" alt="">
+                                        </div>
+                                        <div class="pricing-amount">
+                                            <strong>
+                                                {!! $package->currency === 'INR'
+                                                    ? '₹' .
+                                                        number_format($package->price, 0) .
+                                                        '<span class="pricing-amount-type">/' .
+                                                        ucfirst($package->billing_cycle) .
+                                                        '</span>'
+                                                    : $package->currency .
+                                                        ' ' .
+                                                        number_format($package->price, 0) .
+                                                        '<span class="pricing-amount-type">/' .
+                                                        ucfirst($package->billing_cycle) .
+                                                        '</span>' !!}
+                                            </strong>
 
-                        <!-- Premium Plan -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="pricing-item active wow fadeInUp" data-wow-delay=".25s">
-                                <div class="pricing-header">
-                                    <h5>Premium</h5>
-                                </div>
-                                <div class="pricing-price">
-                                    <div class="pricing-icon">
-                                        <img src="assets/img/icon/building.svg" alt="">
+                                        </div>
                                     </div>
-                                    <div class="pricing-amount">
-                                        <strong>₹959</strong><span class="pricing-amount-type">/Monthly</span>
+
+                                    <div class="pricing-btn">
+                                        <a href="#" class="theme-btn2">
+                                            Purchase Now <i class="fas fa-arrow-right"></i>
+                                        </a>
                                     </div>
-                                </div>
-                                <div class="pricing-btn">
-                                    <a href="pricing.html" class="theme-btn2">Purchase Now <i
-                                            class="fas fa-arrow-right"></i></a>
-                                </div>
-                                <div class="pricing-feature">
-                                    <ul>
-                                        <li><i class="fas fa-check-circle"></i>Unlimited Tenants</li>
-                                        <li><i class="fas fa-check-circle"></i>Unlimited Property Management</li>
-                                        <li><i class="fas fa-check-circle"></i>Custom Notifications & Reminders</li>
-                                        <li><i class="fas fa-check-circle"></i>Custom Branding & Logo</li>
-                                        <li><i class="fas fa-check-circle"></i>Priority 24/7 Support</li>
-                                        <li><i class="fas fa-check-circle"></i>Automated PDF Reports</li>
-                                    </ul>
+
+                                    <div class="pricing-feature">
+                                        <ul>
+                                            @php
+                                                $features = json_decode($package->features, true) ?: [];
+                                            @endphp
+
+                                            @if (!empty($features))
+                                                @foreach ($features as $feature)
+                                                    <li>
+                                                        @if (isset($feature['checked']) && $feature['checked'] == '1')
+                                                            <i class="fas fa-check-circle"></i> {{ $feature['name'] }}
+                                                        @else
+                                                            <i class="fas fa-xmark-circle not-include"></i>
+                                                            {{ $feature['name'] }}
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            @else
+                                                <li>
+                                                    <i class="fas fa-xmark-circle not-include"></i> No features listed
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @empty
+                            <div class="col-12 text-center">
+                                <p>No packages available at the moment.</p>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
         </section>
         <!-- pricing area end -->
+
+
+
+
+
 
     </main>
 @endsection

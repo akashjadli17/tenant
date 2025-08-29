@@ -3072,7 +3072,7 @@ label {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .pricing-icon{
@@ -3091,8 +3091,8 @@ label {
 }
 
 .pricing-amount strong {
-  font-size: 50px;
-  font-weight: 900;
+  font-size: 45px;
+  font-weight: 700;
   color: var(--color-dark);
   line-height: 1;
 }
@@ -3110,7 +3110,7 @@ label {
 }
 
 .pricing-feature {
-  padding: 40px 0 0 0;
+  padding: 20px 0 0 0;
 }
 
 .pricing-feature li {

@@ -53,16 +53,21 @@
                                     <tr>
                                         @foreach ($uniquePackages as $package)
                                             @php
-                                                $pkgFeatures = json_decode($package->features, true) ?? [];
+                                                $raw = $package->features ?? [];
+                                                $pkgFeatures = is_string($raw) ? json_decode($raw, true) : $raw;
+                                                if (!is_array($pkgFeatures)) {
+                                                    $pkgFeatures = [];
+                                                }
                                             @endphp
                                             <td class="text-start">
                                                 <ul class="list-unstyled mb-0">
                                                     @foreach ($pkgFeatures as $f)
                                                         @php
-                                                            $name = is_array($f) ? ($f['name'] ?? '') : $f;
-                                                            $checked = is_array($f) ? ($f['checked'] ?? false) : true;
+                                                            $name = is_array($f) ? $f['name'] ?? '' : $f;
+                                                            $checked = is_array($f) ? $f['checked'] ?? false : true;
                                                         @endphp
-                                                        <li class="d-flex justify-content-between align-items-center border-bottom py-1">
+                                                        <li
+                                                            class="d-flex justify-content-between align-items-center border-bottom py-1">
                                                             <span>{{ $name }}</span>
                                                             @if ($checked)
                                                                 <i class="fas fa-check text-success"></i>
@@ -74,6 +79,7 @@
                                                 </ul>
                                             </td>
                                         @endforeach
+
                                     </tr>
 
                                     {{-- Action Buttons Row --}}

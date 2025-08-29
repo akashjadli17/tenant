@@ -41,7 +41,7 @@ Route::resource('tenants', TenantController::class);
 
 
  Route::get('/', [IndexController::class, 'index'])->name('index');
-
+Route::get('/packages', [IndexController::class, 'packages'])->name('packages');
 // Route::view('/', 'home')->name('home'); // Home Page
 Route::view('/blog', 'blog')->name('blog');
 Route::view('/contact', 'contact')->name('contact');

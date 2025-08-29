@@ -9,19 +9,7 @@ use Illuminate\Validation\Rule;
 
 class PackageController extends Controller
 {
-    /**
-     * Public listing for the front-end (fixes your undefined method error).
-     */
-    public function frontPackages(Request $request)
-    {
-        $packages = Package::query()
-            ->when($request->filled('status'), fn ($q) => $q->where('status', (int) $request->status))
-            ->orderBy('price')
-            ->paginate(12)
-            ->withQueryString();
-
-        return view('packages.front', compact('packages'));
-    }
+    
 
     /**
      * Admin: list packages with simple filters.

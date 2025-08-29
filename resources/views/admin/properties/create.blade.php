@@ -29,7 +29,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data"
+                <form action="{{ route('admin.properties.store') }}" method="POST" enctype="multipart/form-data"
                     class="grid grid-cols-1 gap-4">
                     @csrf
 
