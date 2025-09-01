@@ -29,6 +29,7 @@ class User extends Authenticatable
         'package_started_at',   // added
         'package_renews_at',    // added
         'package_expires_at',
+        'package_status',
     ];
 
     /**

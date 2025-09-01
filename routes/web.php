@@ -37,6 +37,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // GET confirm screen
+    Route::get('packages/approve/{owner}', [PackageController::class, 'approveConfirm'])
+        ->name('packages.approve.confirm');
+
+    // POST approval
+    Route::post('packages/approve/{owner}', [PackageController::class, 'approve'])
+        ->name('packages.approve');
+});
+
+
+
 Route::resource('tenants', TenantController::class);
 
 

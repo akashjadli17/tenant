@@ -114,72 +114,90 @@
                       </button>
                   </div>
 
+@php use Illuminate\Support\Facades\Schema; @endphp
 
-                  @php use Illuminate\Support\Facades\Schema; @endphp
+<!-- Notification dropdown -->
+<div class="dropdown d-inline-block">
+    <button type="button" class="btn header-item noti-icon waves-effect"
+        id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bx bx-bell"></i>
 
-                  <!-- Notification dropdown -->
-                  <div class="dropdown d-inline-block">
-                      <button type="button" class="btn header-item noti-icon waves-effect"
-                          id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        @auth
+            @if (Schema::hasTable('notifications'))
+                @php
+                    $user = auth()->user();
 
-                          <i class="bx bx-bell"></i>
+                    // Hide notifications if admin/owner has no package
+                    $shouldHide = in_array($user->user_type, ['owner','admin']) && !$user->package_id;
 
-                          @auth
-                          @if (Schema::hasTable('notifications'))
-                          @php $unreadCount = auth()->user()->unreadNotifications()->count(); @endphp
-                          @if ($unreadCount > 0)
-                          <span class="badge bg-danger rounded-pill">{{ $unreadCount }}</span>
-                          @endif
-                          @endif
-                          @endauth
-                      </button>
+                    $unreadCount = $shouldHide
+                        ? 0
+                        : $user->unreadNotifications()->count();
+                @endphp
 
-                      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                          aria-labelledby="page-header-notifications-dropdown">
+                @if ($unreadCount > 0)
+                    <span class="badge bg-danger rounded-pill">{{ $unreadCount }}</span>
+                @endif
+            @endif
+        @endauth
+    </button>
 
-                          <div class="p-3">
-                              <h6 class="m-0"> Notifications </h6>
-                          </div>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+        aria-labelledby="page-header-notifications-dropdown">
 
-                          <div data-simplebar style="max-height: 230px;">
-                              @auth
-                              @if (Schema::hasTable('notifications'))
-                              @forelse(auth()->user()->unreadNotifications->take(5) as $notif)
-                              <a href="{{ $notif->data['action_url'] ?? '#' }}" class="text-reset notification-item">
-                                  <div class="d-flex">
-                                      <div class="flex-shrink-0 me-3">
-                                          <div class="avatar-xs">
-                                              <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                                  <i class="bx bx-bell"></i>
-                                              </span>
-                                          </div>
-                                      </div>
-                                      <div class="flex-grow-1">
-                                          <h6 class="mb-1">{{ $notif->data['title'] ?? 'Notification' }}</h6>
-                                          <div class="font-size-12 text-muted">
-                                              <p class="mb-1">{{ $notif->data['message'] }}</p>
-                                              <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
-                                                  {{ $notif->created_at->diffForHumans() }}
-                                              </p>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </a>
-                              @empty
-                              <div class="p-3 text-center text-muted">No new notifications</div>
-                              @endforelse
-                              @endif
-                              @endauth
-                          </div>
+        <div class="p-3 border-bottom">
+            <h6 class="m-0">Notifications</h6>
+        </div>
 
-                          <div class="p-2 border-top d-grid">
-                              <a class="btn btn-sm btn-link font-size-14 text-center"
-                                  href="{{ route('notifications.index') }}">
-                                  <i class="mdi mdi-arrow-right-circle me-1"></i> View All
-                              </a>
-                          </div>
-                      </div>
-                  </div>
+        <div data-simplebar style="max-height: 280px;">
+            @auth
+                @if (Schema::hasTable('notifications'))
+                    @php
+                        $notifications = $shouldHide
+                            ? collect() 
+                            : $user->notifications->take(7);
+                    @endphp
+
+                    @forelse($notifications as $notif)
+                        <a href="{{ $notif->data['action_url'] ?? '#' }}"
+                           class="text-reset notification-item {{ $notif->read_at ? '' : 'bg-light' }}">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title bg-{{ $notif->read_at ? 'secondary' : 'primary' }} rounded-circle font-size-16">
+                                            <i class="bx bx-bell"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ $notif->data['title'] ?? 'Notification' }}</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-1">{{ $notif->data['message'] }}</p>
+                                        <p class="mb-0">
+                                            <i class="mdi mdi-clock-outline"></i>
+                                            {{ $notif->created_at->diffForHumans() }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="p-3 text-center text-muted">No notifications yet</div>
+                    @endforelse
+                @endif
+            @endauth
+        </div>
+
+        <div class="p-2 border-top d-grid">
+            <a class="btn btn-sm btn-link font-size-14 text-center"
+                href="{{ route('notifications.index') }}">
+                <i class="mdi mdi-arrow-right-circle me-1"></i> View All
+            </a>
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -244,3 +262,28 @@
               </div>
           </div>
       </header>
+
+      <!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: "{{ session('success') }}",
+            timer: 3000,
+            showConfirmButton: false
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ session('error') }}",
+            timer: 3000,
+            showConfirmButton: false
+        });
+    @endif
+</script>

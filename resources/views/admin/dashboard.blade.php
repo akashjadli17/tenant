@@ -113,70 +113,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- Packages Section --}}
-                    @if ($showPackages)
-                        <h2 class="mt-4">
-                            Choose a Package
-                            @if (!is_null($daysLeft))
-                                <small class="text-muted">
-                                    ({{ $daysLeft <= 0 ? 'Expired' : $daysLeft . ' days left' }})
-                                </small>
-                            @endif
-                        </h2>
-
-                        <div class="row">
-                            @forelse ($packages as $package)
-                                <div class="col-md-4">
-                                    <div class="card mb-3 h-100">
-                                        <div class="card-body d-flex flex-column">
-                                            <h5 class="text-capitalize mb-1">{{ $package->package_type }}</h5>
-
-                                            @php
-                                                $currency = strtoupper($package->currency ?? 'INR');
-                                                $symbol =
-                                                    $currency === 'INR'
-                                                        ? '₹'
-                                                        : ($currency === 'USD'
-                                                            ? '$'
-                                                            : $currency . ' ');
-                                            @endphp
-
-                                            <div class="mb-2">
-                                                <span
-                                                    class="fw-semibold">{{ $symbol }}{{ number_format($package->price, 2) }}</span>
-                                                <small class="text-muted">/ {{ $package->billing_cycle }}</small>
-                                            </div>
-
-                                            @if (is_array($package->features))
-                                                <ul class="list-unstyled small mb-3">
-                                                    @foreach ($package->features as $feat)
-                                                        <li class="mb-1">
-                                                            @if (($feat['checked'] ?? '0') == '1')
-                                                                ✅ {{ $feat['name'] ?? '' }}
-                                                            @else
-                                                                ❌ <span class="text-muted">{{ $feat['name'] ?? '' }}</span>
-                                                            @endif
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-
-                                            <form action="{{ route('choose.package', $package->id) }}" method="POST"
-                                                class="mt-auto">
-                                                @csrf
-                                                <button class="btn btn-primary w-100">Choose Package</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="col-12">
-                                    <div class="alert alert-info">No active packages available right now.</div>
-                                </div>
-                            @endforelse
-                        </div>
-                    @endif
                 @endif
                 {{-- ================= END ADMIN DASHBOARD ================= --}}
 
@@ -251,6 +187,73 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Packages Section (only for owners) --}}
+                    @if ($showPackages)
+                        <h2 class="mt-4">
+                            Choose a Package
+                            @if (!is_null($daysLeft))
+                                <small class="text-muted">
+                                    ({{ $daysLeft <= 0 ? 'Expired' : $daysLeft . ' days left' }})
+                                </small>
+                            @endif
+                        </h2>
+
+                        <div class="row">
+                            @forelse ($packages as $package)
+                                <div class="col-md-4">
+                                    <div class="card mb-3 h-100">
+                                        <div class="card-body d-flex flex-column">
+                                            <h5 class="text-capitalize mb-1">{{ $package->package_type }}</h5>
+
+                                            @php
+                                                $currency = strtoupper($package->currency ?? 'INR');
+                                                $symbol =
+                                                    $currency === 'INR'
+                                                        ? '₹'
+                                                        : ($currency === 'USD'
+                                                            ? '$'
+                                                            : $currency . ' ');
+                                            @endphp
+
+                                            <div class="mb-2">
+                                                <span
+                                                    class="fw-semibold">{{ $symbol }}{{ number_format($package->price, 2) }}</span>
+                                                <small class="text-muted">/ {{ $package->billing_cycle }}</small>
+                                            </div>
+
+                                            @if (is_array($package->features))
+                                                <ul class="list-unstyled small mb-3">
+                                                    @foreach ($package->features as $feat)
+                                                        <li class="mb-1">
+                                                            @if (($feat['checked'] ?? '0') == '1')
+                                                                ✅ {{ $feat['name'] ?? '' }}
+                                                            @else
+                                                                ❌ <span
+                                                                    class="text-muted">{{ $feat['name'] ?? '' }}</span>
+                                                            @endif
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+
+
+                                            <form action="{{ route('choose.package', $package->id) }}" method="POST"
+                                                class="mt-auto">
+                                                @csrf
+                                                <button class="btn btn-primary w-100">Choose Package</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-12">
+                                    <div class="alert alert-info">No active packages available right now.</div>
+                                </div>
+                            @endforelse
+                        </div>
+                    @endif
+
                 @endif
                 {{-- ================= END OWNER DASHBOARD ================= --}}
 

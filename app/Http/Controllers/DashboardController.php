@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\PackageExpiringSoon;
+use App\Notifications\OwnerPackageActivated;
+use App\Notifications\TenantPackageNotification;
 use App\Models\Package;
 use App\Models\Property;
 use App\Models\Unit;
@@ -49,13 +51,36 @@ class DashboardController extends Controller
             }
         }
 
-        if ($user->user_type === 'owner') {
-            // Only owner’s properties/units
-            $totalProperties = Property::where('owner_id', $user->id)->count();
-            $totalUnits      = Unit::whereIn('property_id', 
-                                Property::where('owner_id', $user->id)->pluck('id')
-                              )->count();
-        }
+            if ($user->user_type === 'owner') {
+                // Only owner’s properties/units
+                $totalProperties = Property::where('owner_id', $user->id)->count();
+                $totalUnits      = Unit::whereIn(
+                    'property_id',
+                    Property::where('owner_id', $user->id)->pluck('id')
+                )->count();
+
+                // --- Package logic (same as admin) ---
+                $daysLeft = $user->daysUntilPackageExpires();
+                $showPackages = $user->shouldSeePackageChooser(10);
+
+                $packages = $showPackages
+                    ? Package::where('status', 1)->orderBy('price')->get()
+                    : collect();
+
+                // 🔔 Notify Owner if package is expiring soon
+                if (!is_null($daysLeft) && $daysLeft > 0 && $daysLeft <= 10) {
+                    $already = $user->notifications()
+                        ->where('type', \App\Notifications\PackageExpiringSoon::class)
+                        ->whereJsonContains('data->expires_at', optional($user->package_expires_at)->toDateString())
+                        ->exists();
+
+                    if (!$already) {
+                        $user->notify(new \App\Notifications\PackageExpiringSoon($user->package_expires_at, $daysLeft));
+                    }
+                }
+            }
+
+
 
         if ($user->user_type === 'tenant') {
             // Only tenant’s unit
@@ -75,43 +100,56 @@ class DashboardController extends Controller
         ));
     }
 
-    public function choosePackage(Package $package)
-    {
-        $user = auth()->user();
+  public function choosePackage(Package $package)
+{
+    $user = auth()->user();
 
-        // Only admin can choose package
-        if ($user->user_type !== 'admin') {
-            abort(403, 'Unauthorized action');
-        }
-
-        $now   = Carbon::now();
-        $interval = strtolower($package->interval ?? 'month');   
-        $count    = (int) ($package->interval_count ?? 1);
-        $trial    = (int) ($package->trial_days ?? 0);
-
-        $packageStartedAt = $now->copy();
-
-        if ($trial > 0) {
-            $firstExpiry = $packageStartedAt->copy()->addDays($trial);
-        } else {
-            $firstExpiry = match ($interval) {
-                'day'   => $packageStartedAt->copy()->addDays($count),
-                'week'  => $packageStartedAt->copy()->addWeeks($count),
-                'year'  => $packageStartedAt->copy()->addYears($count),
-                default => $packageStartedAt->copy()->addMonthsNoOverflow($count),
-            };
-        }
-
-        $packageRenewsAt  = $firstExpiry->copy();
-        $packageExpiresAt = $firstExpiry->copy();
-
-        $user->update([
-            'package_id'         => $package->id,
-            'package_started_at' => $packageStartedAt,
-            'package_renews_at'  => $packageRenewsAt,
-            'package_expires_at' => $packageExpiresAt,
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Package applied successfully.');
+    // Only owner can choose package (if admin only, adjust accordingly)
+    if ($user->user_type !== 'owner') {
+        abort(403, 'Unauthorized action');
     }
+
+    $now   = Carbon::now();
+    $interval = strtolower($package->interval ?? 'month');   
+    $count    = (int) ($package->interval_count ?? 1);
+    $trial    = (int) ($package->trial_days ?? 0);
+
+    $packageStartedAt = $now->copy();
+
+    if ($trial > 0) {
+        $firstExpiry = $packageStartedAt->copy()->addDays($trial);
+    } else {
+        $firstExpiry = match ($interval) {
+            'day'   => $packageStartedAt->copy()->addDays($count),
+            'week'  => $packageStartedAt->copy()->addWeeks($count),
+            'year'  => $packageStartedAt->copy()->addYears($count),
+            default => $packageStartedAt->copy()->addMonthsNoOverflow($count),
+        };
+    }
+
+    $user->update([
+        'package_id'         => $package->id,
+        'package_started_at' => $packageStartedAt,
+        'package_renews_at'  => $firstExpiry,
+        'package_expires_at' => $firstExpiry,
+    ]);
+
+    // 🔔 Notify Owner
+    $user->notify(new \App\Notifications\OwnerPackageActivated($package));
+
+    // 🔔 Notify Admin(s)
+    $admins = \App\Models\User::where('user_type', 'admin')->get();
+    foreach ($admins as $admin) {
+        $admin->notify(new \App\Notifications\AdminPackageApproval($user, $package));
+    }
+
+    // 🔔 Notify Tenant(s) (if needed)
+    $tenants = \App\Models\User::where('user_type', 'tenant')->get();
+    foreach ($tenants as $tenant) {
+        $tenant->notify(new \App\Notifications\TenantPackageNotification($user, $package));
+    }
+
+    return redirect()->route('dashboard')->with('success', 'Package applied successfully.');
+}
+
 }
