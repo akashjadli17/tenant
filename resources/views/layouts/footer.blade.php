@@ -31,16 +31,38 @@
                         <div class="footer-widget-box list">
                             <h4 class="footer-widget-title">Quick Links</h4>
                             <ul class="footer-list">
-                                <li><a href="index.php" class="nav-link"><i
-                                            class="far fa-angle-double-right"></i>Home</a></li>
-                                <li><a href="package.php" class="nav-link"><i
-                                            class="far fa-angle-double-right"></i>Packages</a></li>
-                                <li><a href="blog.php" class="nav-link"><i
-                                            class="far fa-angle-double-right"></i>Blog</a></li>
-                                <li><a href="contact.php" class="nav-link"><i
-                                            class="far fa-angle-double-right"></i>Contact</a></li>
-                                <li><a href="#" class="nav-link"><i
-                                            class="far fa-angle-double-right"></i>Login</a></li>
+                                <li>
+                                    <a href="{{ route('index') }}" class="nav-link">
+                                        <i class="far fa-angle-double-right"></i> Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('packages') }}" class="nav-link">
+                                        <i class="far fa-angle-double-right"></i> Packages
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('blog') }}" class="nav-link">
+                                        <i class="far fa-angle-double-right"></i> Blog
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('contact') }}" class="nav-link">
+                                        <i class="far fa-angle-double-right"></i> Contact
+                                    </a>
+                                </li>
+                                
+                                <li>
+                                    <a href="{{route('terms') }}" class="nav-link">
+                                        <i class="far fa-angle-double-right"></i>  Terms & Conditions
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('privacy') }}" class="nav-link">
+                                        <i class="far fa-angle-double-right"></i> Privacy Policy
+                                    </a>
+                                </li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -112,8 +134,11 @@
             </div>
         </div>
     </div>
+
+   
 </footer>
 <!-- footer area end -->
+
 
 
 <!-- scroll-top -->
