@@ -11,6 +11,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\Admin\PackageController; 
+use App\Http\Controllers\BlogController;
 
 
 
@@ -56,8 +57,8 @@ Route::resource('tenants', TenantController::class);
  Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/packages', [IndexController::class, 'packages'])->name('packages');
 // Route::view('/', 'home')->name('home'); // Home Page
-Route::view('/blog', 'blog')->name('blog');
-Route::view('/blog-details', 'blog-details')->name('blog-details');
+Route::get('/blog', [IndexController::class, 'blog'])->name('blog');
+Route::get('/blog/{slug}', [IndexController::class, 'blogDetails'])->name('blog-details');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/wallet', 'wallet')->name('wallet');
 Route::view('/card', 'card')->name('card');
@@ -76,6 +77,18 @@ Route::get('/packages', [IndexController::class, 'packages'])->name('packages');
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('packages', PackageController::class);
 });
+
+
+
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Blog CRUD using resource routes
+    Route::resource('blogs', BlogController::class);
+
+    // Optional: Toggle status route (not included in standard resource)
+    Route::post('blogs/toggle-status/{id}', [BlogController::class, 'toggleStatus'])->name('blogs.toggleStatus');
+});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', function () {
